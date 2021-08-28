@@ -7,4 +7,18 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="primary">#55A8F4</color>
+    <color name="primaryDark">#444559</color>
+    <color name="secondary">#EAFFFE</color>
+    <color name="secondaryDark">#4FACAC</color>
+    <color name="accent">#2E94F2</color>
+    <color name="grey">#D1D1D1</color>
+    <color name="greyDark">#616161</color>
+
+    <color name="input">#F6F6F6</color>
+    <color name="transparant">#00EEEEEE</color>
+
+    <color name="shimmer">#E7E7E7</color>
+    <color name="shimmerDark">#D5D5D5</color>
 </resources>

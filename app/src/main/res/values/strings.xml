@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">GudangSbutk</string>
+    <string name="app_name">Gudang SBUTK</string>
+    <string name="title_home">Home</string>
+    <string name="title_form">Form</string>
+    <string name="title_data">Data</string>
+    <string name="title_settings">Settings</string>
 </resources>
