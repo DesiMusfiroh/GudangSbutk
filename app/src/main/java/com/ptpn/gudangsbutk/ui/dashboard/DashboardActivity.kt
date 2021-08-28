@@ -1,14 +1,12 @@
-package com.ptpn.gudangsbutk
+package com.ptpn.gudangsbutk.ui.dashboard
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.ptpn.gudangsbutk.R
 
-class MainActivity : AppCompatActivity() {
-
+class DashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-
+        setContentView(R.layout.activity_dashboard)
     }
 }

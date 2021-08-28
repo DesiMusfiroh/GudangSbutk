@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "902742086184",
+    "project_id": "gudangsbutk",
+    "storage_bucket": "gudangsbutk.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:902742086184:android:bb3cc9409c7223ae225b1d",
+        "android_client_info": {
+          "package_name": "com.ptpn.gudangsbutk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "902742086184-ra25j3hfajvt0eu1u3el050dd26o0num.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPOX28SsoXjIGI_yezd1Z6kDKiSGaOpGA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "902742086184-ra25j3hfajvt0eu1u3el050dd26o0num.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
