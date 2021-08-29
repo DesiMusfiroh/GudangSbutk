@@ -15,4 +15,13 @@
     <string name="no">Tidak</string>
     <string name="yes">Ya</string>
     <string name="name">Nama</string>
+    <string name="hai_user">Hi, %s</string>
+    <string name="tanggal">Senin, 01 Januari 2021</string>
+    <string name="calender">Calender</string>
+    <string name="pengambilan_barang">Pengambilan Barang Hari Ini</string>
+    <string name="data_saya">Data Saya</string>
+    <string name="data_all">Semua Data</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="data_pengambilan_barang">Data Pengambilan Barang</string>
 </resources>

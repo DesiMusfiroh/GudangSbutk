@@ -17,9 +17,8 @@ class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        supportActionBar?.hide()
         binding.navView.setItemSelected(R.id.navigation_home, true)
-
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.nav_host_fragment, HomeFragment())

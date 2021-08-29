@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.auth.FirebaseAuth
 import com.ptpn.gudangsbutk.data.Barang
 import com.ptpn.gudangsbutk.databinding.FragmentSettingsBinding
 import com.ptpn.gudangsbutk.ui.barang.AddBarangActivity
@@ -32,7 +31,7 @@ class SettingsFragment : Fragment() {
         private const val REQUEST_CODE_EDIT_BARANG = 200
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentSettingsBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
