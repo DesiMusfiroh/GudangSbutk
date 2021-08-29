@@ -66,6 +66,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:19.2.0'
 
     implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
+    implementation "com.google.firebase:firebase-firestore:23.0.3"
+    implementation "com.firebaseui:firebase-ui-firestore:3.0.0"
 
     // room database
     implementation "androidx.room:room-runtime:$roomVersion"

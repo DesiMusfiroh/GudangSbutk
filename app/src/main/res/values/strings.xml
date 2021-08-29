@@ -10,4 +10,9 @@
     <string name="nama_barang">Nama Jenis Barang</string>
     <string name="simpan">Simpan Data</string>
     <string name="keterangan">Keterangan Tambahan</string>
+    <string name="delete">Hapus</string>
+    <string name="delete_barang">Hapus data barang ini ?</string>
+    <string name="no">Tidak</string>
+    <string name="yes">Ya</string>
+    <string name="name">Nama</string>
 </resources>

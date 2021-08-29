@@ -1,5 +1,6 @@
 package com.ptpn.gudangsbutk.data
 
+import androidx.lifecycle.LiveData
 import com.ptpn.gudangsbutk.data.local.LocalDataSource
 import com.ptpn.gudangsbutk.data.remote.RemoteDataSource
 
@@ -19,6 +20,7 @@ class GudangRepository private constructor(
                 }
     }
 
-    fun insertBarang(barang: Barang): Boolean = remoteDataSource.insertBarang(barang)
-
+    fun writeBarang(barang: Barang): Boolean = remoteDataSource.writeBarang(barang)
+    fun getBarang(): LiveData<ArrayList<Barang>> = remoteDataSource.getBarang()
+    fun deleteBarang(kode: String) = remoteDataSource.deleteBarang(kode)
 }

@@ -10,7 +10,7 @@ import com.ptpn.gudangsbutk.viewmodel.ViewModelFactory
 
 class AddBarangActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBarangBinding
-    private lateinit var viewModel: AddBarangViewModel
+    private lateinit var viewModel: BarangViewModel
 
     companion object {
         const val RESULT_CODE_ADD_BARANG = 110
@@ -26,7 +26,7 @@ class AddBarangActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val factory = ViewModelFactory.getInstance(this)
-        viewModel = ViewModelProvider(this, factory)[AddBarangViewModel::class.java]
+        viewModel = ViewModelProvider(this, factory)[BarangViewModel::class.java]
 
         binding.btnSubmit.setOnClickListener{
             save()

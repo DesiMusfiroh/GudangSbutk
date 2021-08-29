@@ -14,10 +14,18 @@
         android:text="@string/jenis_barang" 
         android:layout_marginTop="20dp"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_barang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/item_barang" />
+
     <Button
         style="@style/Button"
         android:id="@+id/btn_add_barang"
         android:text="@string/add_barang"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp"
+        android:padding="8dp"/>
+
 </LinearLayout>

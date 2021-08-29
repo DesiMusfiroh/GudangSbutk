@@ -5,7 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.ptpn.gudangsbutk.data.GudangRepository
 import com.ptpn.gudangsbutk.di.Injection
-import com.ptpn.gudangsbutk.ui.barang.AddBarangViewModel
+import com.ptpn.gudangsbutk.ui.barang.BarangViewModel
+import com.ptpn.gudangsbutk.ui.settings.SettingsViewModel
 
 class ViewModelFactory private constructor(private val mGudangRepository: GudangRepository)
     : ViewModelProvider.NewInstanceFactory() {
@@ -23,8 +24,11 @@ class ViewModelFactory private constructor(private val mGudangRepository: Gudang
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
-            modelClass.isAssignableFrom(AddBarangViewModel::class.java) -> {
-                AddBarangViewModel(mGudangRepository) as T
+            modelClass.isAssignableFrom(BarangViewModel::class.java) -> {
+                BarangViewModel(mGudangRepository) as T
+            }
+            modelClass.isAssignableFrom(SettingsViewModel::class.java) -> {
+                SettingsViewModel(mGudangRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

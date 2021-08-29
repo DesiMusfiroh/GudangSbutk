@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GudangSbutk">
-        <activity android:name=".ui.barang.AddBarangActivity"></activity>
+        <activity android:name=".ui.barang.AddBarangActivity"/>
+        <activity android:name=".ui.barang.EditBarangActivity"/>
         <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +20,7 @@
         </activity>
         <activity android:name=".ui.dashboard.DashboardActivity" />
         <activity android:name=".ui.signin.SignInActivity" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity"/>
     </application>
 
 </manifest>
