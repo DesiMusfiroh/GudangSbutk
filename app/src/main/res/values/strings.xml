@@ -4,4 +4,10 @@
     <string name="title_form">Form</string>
     <string name="title_data">Data</string>
     <string name="title_settings">Settings</string>
+    <string name="jenis_barang">Jenis Barang</string>
+    <string name="add_barang">Tambah Jenis Barang</string>
+    <string name="kode_barang">Kode Jenis Barang</string>
+    <string name="nama_barang">Nama Jenis Barang</string>
+    <string name="simpan">Simpan Data</string>
+    <string name="keterangan">Keterangan Tambahan</string>
 </resources>

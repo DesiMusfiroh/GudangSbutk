@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.settings.SettinsFragment">
+    android:layout_marginHorizontal="20dp"
+    android:orientation="vertical"
+    tools:context=".ui.settings.SettingsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        style="@style/Text.Title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/title_settings" />
+        android:layout_height="wrap_content"
+        android:text="@string/jenis_barang" 
+        android:layout_marginTop="20dp"/>
 
-</FrameLayout>
+    <Button
+        style="@style/Button"
+        android:id="@+id/btn_add_barang"
+        android:text="@string/add_barang"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"/>
+</LinearLayout>
