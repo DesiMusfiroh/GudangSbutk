@@ -127,6 +127,12 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginHorizontal="20dp"/>
 
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_barang"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="12dp"
+                            tools:listitem="@layout/item_barang_home"/>
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

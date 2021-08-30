@@ -7,6 +7,7 @@ import com.ptpn.gudangsbutk.data.GudangRepository
 import com.ptpn.gudangsbutk.di.Injection
 import com.ptpn.gudangsbutk.ui.barang.BarangViewModel
 import com.ptpn.gudangsbutk.ui.form.FormViewModel
+import com.ptpn.gudangsbutk.ui.home.HomeViewModel
 import com.ptpn.gudangsbutk.ui.settings.SettingsViewModel
 
 class ViewModelFactory private constructor(private val mGudangRepository: GudangRepository)
@@ -33,6 +34,9 @@ class ViewModelFactory private constructor(private val mGudangRepository: Gudang
             }
             modelClass.isAssignableFrom(FormViewModel::class.java) -> {
                 FormViewModel(mGudangRepository) as T
+            }
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
+                HomeViewModel(mGudangRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }
