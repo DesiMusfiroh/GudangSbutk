@@ -7,6 +7,7 @@ import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.ptpn.gudangsbutk.data.Barang
+import com.ptpn.gudangsbutk.data.Item
 
 class RemoteDataSource {
     private val db = Firebase.firestore
@@ -43,8 +44,6 @@ class RemoteDataSource {
             results.postValue(listBarang)
         }
         return results
-    //        val query = db.collection("barang").orderBy("kode", Query.Direction.ASCENDING)
-    //        val response = FirestoreRecyclerOptions.Builder<Barang>().setQuery(query, Barang::class.java).build()
     }
 
     fun deleteBarang(kode: String) : Boolean {
@@ -52,6 +51,39 @@ class RemoteDataSource {
                 .delete()
                 .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
                 .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
+        return true
+    }
+
+    fun getListBarang() : LiveData<List<String>> {
+        val results = MutableLiveData<List<String>>()
+        db.collection("barang").addSnapshotListener { value, _ ->
+            val listBarang = ArrayList<String>()
+            for (dc: DocumentChange in value?.documentChanges!!) {
+                if (dc.type == DocumentChange.Type.ADDED) {
+                    listBarang.add(dc.document["nama"].toString())
+                }
+            }
+            results.postValue(listBarang)
+        }
+        return results
+    }
+
+    fun insertItem(item: Item) : Boolean {
+        val newItem = hashMapOf(
+                "id" to item.id,
+                "user" to item.user,
+                "tanggal" to item.tanggal,
+                "sales" to item.sales,
+                "barang" to item.barang,
+                "jumlah" to item.jumlah,
+                "satuan" to item.satuan,
+                "keterangan" to item.keterangan,
+                "added_time" to item.addedTime,
+        )
+        db.collection("item").document("${item.id}")
+                .set(newItem)
+                .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
+                .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
         return true
     }
 }

@@ -23,4 +23,7 @@ class GudangRepository private constructor(
     fun writeBarang(barang: Barang): Boolean = remoteDataSource.writeBarang(barang)
     fun getBarang(): LiveData<ArrayList<Barang>> = remoteDataSource.getBarang()
     fun deleteBarang(kode: String) = remoteDataSource.deleteBarang(kode)
+
+    fun getListBarang() : LiveData<List<String>> = remoteDataSource.getListBarang()
+    fun insertItem(item: Item): Boolean = remoteDataSource.insertItem(item)
 }

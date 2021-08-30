@@ -2,6 +2,7 @@ package com.ptpn.gudangsbutk.ui.dashboard
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.ptpn.gudangsbutk.R
 import com.ptpn.gudangsbutk.databinding.ActivityDashboardBinding
@@ -9,6 +10,7 @@ import com.ptpn.gudangsbutk.ui.data.DataFragment
 import com.ptpn.gudangsbutk.ui.form.FormFragment
 import com.ptpn.gudangsbutk.ui.home.HomeFragment
 import com.ptpn.gudangsbutk.ui.settings.SettingsFragment
+import com.ptpn.gudangsbutk.utils.DatePickerFragment
 
 class DashboardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDashboardBinding
@@ -41,4 +43,5 @@ class DashboardActivity : AppCompatActivity() {
                 .commit()
         }
     }
+
 }
