@@ -24,48 +24,36 @@
             <TextView
                 style="@style/Text.Regular"
                 android:text="@string/kode_barang"
-                android:layout_marginVertical="16dp"/>
+                android:layout_marginTop="20dp"/>
 
             <com.google.android.material.textfield.TextInputEditText
-                style="@style/Text.Regular"
                 android:id="@+id/et_kode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_input"
-                android:textColor="@color/black"
                 android:inputType="textCapCharacters"
-                android:padding="16dp"
                 android:maxLines="1"/>
 
             <TextView
                 style="@style/Text.Regular"
                 android:text="@string/nama_barang"
-                android:layout_marginVertical="16dp"/>
+                android:layout_marginTop="10dp"/>
 
             <com.google.android.material.textfield.TextInputEditText
-                style="@style/Text.Regular"
                 android:id="@+id/et_nama"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_input"
-                android:textColor="@color/black"
-                android:inputType="textCapWords"
-                android:padding="16dp" />
+                android:inputType="textCapWords"/>
 
             <TextView
                 style="@style/Text.Regular"
                 android:text="@string/keterangan"
-                android:layout_marginVertical="16dp"/>
+                android:layout_marginTop="10dp"/>
 
             <com.google.android.material.textfield.TextInputEditText
-                style="@style/Text.Regular"
                 android:id="@+id/et_keterangan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_input"
-                android:textColor="@color/black"
-                android:inputType="textCapSentences"
-                android:padding="16dp"/>
+                android:inputType="textCapSentences"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 style="@style/Text.Regular"
@@ -82,7 +70,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:src="@drawable/bg_input"
-                android:layout_margin="16dp"
+                android:layout_margin="10dp"
                 android:visibility="gone"/>
 
             <TextView

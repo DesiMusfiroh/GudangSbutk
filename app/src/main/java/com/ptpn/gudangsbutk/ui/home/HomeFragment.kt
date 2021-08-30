@@ -5,15 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
 import com.google.firebase.auth.FirebaseAuth
 import com.ptpn.gudangsbutk.R
 import com.ptpn.gudangsbutk.data.Barang
 import com.ptpn.gudangsbutk.data.Item
 import com.ptpn.gudangsbutk.databinding.FragmentHomeBinding
+import com.ptpn.gudangsbutk.utils.generateFile
+import com.ptpn.gudangsbutk.utils.goToFileIntent
 import com.ptpn.gudangsbutk.viewmodel.ViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
@@ -25,6 +29,7 @@ class HomeFragment : Fragment() {
     private lateinit var barangAdapter: HomeBarangAdapter
     private lateinit var itemAdapter: HomeItemAdapter
     private lateinit var tanggal: String
+    private lateinit var itemResponse: List<Item>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
@@ -52,10 +57,12 @@ class HomeFragment : Fragment() {
 
         populateBarang()
         populateItem()
+        binding.btnExportExcel.setOnClickListener { exportExcel() }
     }
 
     private fun populateItem() {
         viewModel.getDailyItem(tanggal).observe(viewLifecycleOwner, { listItem ->
+            itemResponse = listItem
             if (listItem !== null) {
                 itemAdapter = HomeItemAdapter(listItem, requireContext())
                 itemAdapter.notifyDataSetChanged()
@@ -94,4 +101,32 @@ class HomeFragment : Fragment() {
         })
     }
 
+    private fun getCSVFileName() : String = "Pengambilan Barang $tanggal.csv"
+
+    private fun exportExcel() {
+        val csvFile = generateFile(requireContext(), getCSVFileName())
+        if (csvFile != null) {
+            csvWriter().open(csvFile, append = false) {
+                writeRow(listOf(
+                        "No", "Tanggal", "Sales", "Barang", "Jumlah", "Satuan", "Keterangan", "Added Time"))
+                itemResponse.forEachIndexed { index, item ->
+                    writeRow(listOf(
+                            index + 1,
+                            item.tanggal,
+                            item.sales,
+                            item.barang,
+                            item.jumlah,
+                            item.satuan,
+                            item.keterangan,
+                            item.addedTime
+                    ))
+                }
+            }
+            Toast.makeText(requireContext(), getString(R.string.csv_file_generated_text), Toast.LENGTH_LONG).show()
+            val intent = goToFileIntent(requireContext(), csvFile)
+            startActivity(intent)
+        } else {
+            Toast.makeText(requireContext(), getString(R.string.csv_file_not_generated_text), Toast.LENGTH_LONG).show()
+        }
+    }
 }

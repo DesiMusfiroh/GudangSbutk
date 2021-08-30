@@ -24,6 +24,16 @@
         <activity android:name=".ui.dashboard.DashboardActivity" />
         <activity android:name=".ui.signin.SignInActivity" />
         <activity android:name=".MainActivity"/>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.ptpn.gudangsbutk.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 
 </manifest>

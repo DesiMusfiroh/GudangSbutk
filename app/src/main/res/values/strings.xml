@@ -34,4 +34,9 @@
     <string name="warning_image">Silahkan pilih foto barang terlebih dahulu !</string>
     <string name="added_time">Added Time</string>
     <string name="riwayat_pengambilan_barang">Riwayat Pengambilan Barang</string>
+    <string name="download_pdf">Download PDF</string>
+    <string name="export_excel">Export Excel</string>
+    <string name="csv_file_generated_text">File Excel berhasil dibuat</string>
+    <string name="csv_file_not_generated_text">Gagal memuat File Excel !</string>
+    <string name="export_pdf">Export PDF</string>
 </resources>

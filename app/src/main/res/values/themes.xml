@@ -22,7 +22,7 @@
     <style name="Text.Title">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">20sp</item>
-        <item name="fontFamily">@font/gotham_bold</item>
+        <item name="fontFamily">@font/poppins_semibold</item>
     </style>
 
     <style name="Text.Medium">
@@ -43,7 +43,10 @@
 
     <style name="Button">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">52dp</item>
         <item name="background">@drawable/bg_button</item>
+        <item name="fontFamily">@font/merriweather_sans</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
     </style>
 </resources>

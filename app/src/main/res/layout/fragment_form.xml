@@ -75,7 +75,7 @@
             <TextView
                 style="@style/Text.Regular"
                 android:text="@string/jenis_barang"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginTop="10dp"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -87,7 +87,6 @@
                     android:id="@+id/actv_barang"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
                     android:inputType="none"
                     tools:ignore="LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -95,7 +94,7 @@
             <TextView
                 style="@style/Text.Regular"
                 android:text="@string/jumlah"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginTop="10dp"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -127,7 +126,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none"
-                        android:textSize="16sp"
                         tools:ignore="LabelFor" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -135,7 +133,7 @@
             <TextView
                 style="@style/Text.Regular"
                 android:text="@string/keterangan"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginTop="10dp"/>
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_keterangan"
                 android:layout_width="match_parent"
@@ -143,9 +141,9 @@
                 android:inputType="textCapSentences"/>
 
             <Button
+                style="@style/Button"
                 android:id="@+id/btn_submit"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="@string/simpan"
                 android:layout_gravity="end"
                 android:layout_marginVertical="16dp"/>
