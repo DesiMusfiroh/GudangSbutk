@@ -1,11 +1,13 @@
 package com.ptpn.gudangsbutk.data.remote
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import com.ptpn.gudangsbutk.data.Barang
 import com.ptpn.gudangsbutk.data.Item
 
@@ -19,16 +21,63 @@ class RemoteDataSource {
         private const val TAG = "Remote Data Source"
     }
 
-    fun writeBarang(barang: Barang): Boolean {
-        val newBarang = hashMapOf(
-            "kode" to barang.kode,
-            "nama" to barang.nama,
-            "keterangan" to barang.keterangan
-        )
-        db.collection("barang").document("${barang.kode}")
-            .set(newBarang)
-            .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
-            .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+    fun insertBarang(barang: Barang, imageUri: Uri): Boolean {
+        val fileName = StringBuilder("${barang.kode}.jpg")
+        val storageReference = FirebaseStorage.getInstance().getReference("images/$fileName")
+        storageReference.putFile(imageUri).addOnSuccessListener { uploadImage ->
+            storageReference.downloadUrl.addOnSuccessListener { firebaseImageUri ->
+                val newBarang = hashMapOf(
+                        "kode" to barang.kode,
+                        "nama" to barang.nama,
+                        "keterangan" to barang.keterangan,
+                        "image" to firebaseImageUri.toString()
+                )
+                db.collection("barang").document("${barang.kode}")
+                        .set(newBarang)
+                        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
+                        .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+            }
+            Log.d(TAG, "sukses upload image $uploadImage")
+        }.addOnFailureListener {
+            Log.d(TAG, "gagal upload image $it")
+        }
+        return true
+    }
+
+    fun updateBarang(barang: Barang, imageUri: Uri?) : Boolean {
+        if (imageUri != null) {
+            val fileName = StringBuilder("${barang.kode}.jpg")
+            val storageReference = FirebaseStorage.getInstance().getReference("images/$fileName")
+            storageReference.delete()
+            storageReference.putFile(imageUri).addOnSuccessListener { uploadImage ->
+                storageReference.downloadUrl.addOnSuccessListener { firebaseImageUri ->
+                    val updateBarang = hashMapOf(
+                        "kode" to barang.kode,
+                        "nama" to barang.nama,
+                        "keterangan" to barang.keterangan,
+                        "image" to firebaseImageUri.toString()
+                    )
+                    db.collection("barang").document("${barang.kode}")
+                        .set(updateBarang)
+                        .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
+                        .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+                }
+                Log.d(TAG, "sukses upload image $uploadImage")
+            }.addOnFailureListener {
+                Log.d(TAG, "gagal upload image $it")
+            }
+        } else {
+            val updateBarang = hashMapOf(
+                "kode" to barang.kode,
+                "nama" to barang.nama,
+                "keterangan" to barang.keterangan,
+                "image" to barang.image,
+            )
+            db.collection("barang").document("${barang.kode}")
+                .set(updateBarang)
+                .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
+                .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+        }
         return true
     }
 
@@ -47,6 +96,9 @@ class RemoteDataSource {
     }
 
     fun deleteBarang(kode: String) : Boolean {
+        val fileName = StringBuilder("${kode}.jpg")
+        val storageReference = FirebaseStorage.getInstance().getReference("images/$fileName")
+        storageReference.delete()
         db.collection("barang").document(kode)
                 .delete()
                 .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }

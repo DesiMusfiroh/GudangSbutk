@@ -73,8 +73,8 @@ class SettingsFragment : Fragment() {
     }
 
     override fun onResume() {
-        super.onResume()
         populateBarang()
+        super.onResume()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

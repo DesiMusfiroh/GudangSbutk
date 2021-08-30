@@ -29,4 +29,7 @@
     <string name="jumlah">Jumlah Barang</string>
     <string name="pilih_barang">Pilih Barang</string>
     <string name="pilih_satuan">Pilih Satuan</string>
+    <string name="choose_photo">Pilih Foto Barang</string>
+    <string name="choose_image">Pilih Foto Barang</string>
+    <string name="warning_image">Silahkan pilih foto barang terlebih dahulu !</string>
 </resources>
