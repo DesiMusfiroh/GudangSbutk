@@ -1,6 +1,5 @@
 package com.ptpn.gudangsbutk.ui.home
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +12,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.ptpn.gudangsbutk.R
 import com.ptpn.gudangsbutk.data.Barang
+import com.ptpn.gudangsbutk.data.Item
 import com.ptpn.gudangsbutk.databinding.FragmentHomeBinding
 import com.ptpn.gudangsbutk.viewmodel.ViewModelFactory
 import java.text.SimpleDateFormat
@@ -23,6 +23,8 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: HomeViewModel
     private lateinit var mAuth: FirebaseAuth
     private lateinit var barangAdapter: HomeBarangAdapter
+    private lateinit var itemAdapter: HomeItemAdapter
+    private lateinit var tanggal: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
@@ -41,11 +43,35 @@ class HomeFragment : Fragment() {
         val datetimeFormat = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale.getDefault())
         val currentDate = datetimeFormat.format(date)
 
+        val tanggalFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+        tanggal = tanggalFormat.format(date)
+
         binding.tvUser.text = getString(R.string.hai_user, currentUser?.displayName)
         binding.tvDate.text = currentDate
         Glide.with(requireContext()).load(currentUser?.photoUrl).apply(RequestOptions.circleCropTransform()).into(binding.btnUser)
 
         populateBarang()
+        populateItem()
+    }
+
+    private fun populateItem() {
+        viewModel.getDailyItem(tanggal).observe(viewLifecycleOwner, { listItem ->
+            if (listItem !== null) {
+                itemAdapter = HomeItemAdapter(listItem, requireContext())
+                itemAdapter.notifyDataSetChanged()
+
+                binding.apply {
+                    rvItem.layoutManager = LinearLayoutManager(context)
+                    rvItem.setHasFixedSize(true)
+                    rvItem.adapter = itemAdapter
+                }
+                itemAdapter.setOnItemClickCallback(object : HomeItemAdapter.OnItemClickCallback {
+                    override fun onItemClicked(data: Item) {
+
+                    }
+                })
+            }
+        })
     }
 
     private fun populateBarang() {

@@ -28,8 +28,10 @@
     <string name="sales">Nama Sales</string>
     <string name="jumlah">Jumlah Barang</string>
     <string name="pilih_barang">Pilih Barang</string>
-    <string name="pilih_satuan">Pilih Satuan</string>
+    <string name="pilih_satuan">Satuan</string>
     <string name="choose_photo">Pilih Foto Barang</string>
     <string name="choose_image">Pilih Foto Barang</string>
     <string name="warning_image">Silahkan pilih foto barang terlebih dahulu !</string>
+    <string name="added_time">Added Time</string>
+    <string name="riwayat_pengambilan_barang">Riwayat Pengambilan Barang</string>
 </resources>

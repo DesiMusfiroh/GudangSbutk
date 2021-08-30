@@ -22,16 +22,22 @@
     <style name="Text.Title">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">20sp</item>
-        <item name="fontFamily">@font/gilroy_bold</item>
+        <item name="fontFamily">@font/gotham_bold</item>
     </style>
 
     <style name="Text.Medium">
         <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="fontFamily">@font/merriweather_sans</item>
+    </style>
+
+    <style name="Text.Regular">
+        <item name="android:textSize">14sp</item>
         <item name="fontFamily">@font/merriweather_sans</item>
     </style>
 
     <style name="Text.Small">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">10sp</item>
         <item name="fontFamily">@font/merriweather_sans</item>
     </style>
 

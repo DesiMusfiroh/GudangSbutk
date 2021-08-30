@@ -28,4 +28,6 @@ class GudangRepository private constructor(
 
     fun getListBarang() : LiveData<List<String>> = remoteDataSource.getListBarang()
     fun insertItem(item: Item): Boolean = remoteDataSource.insertItem(item)
+    fun getAllItem(): LiveData<ArrayList<Item>> = remoteDataSource.getAllItem()
+    fun getDailyItem(tanggal: String): LiveData<ArrayList<Item>> = remoteDataSource.getDailyItem(tanggal)
 }

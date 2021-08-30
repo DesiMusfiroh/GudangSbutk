@@ -130,12 +130,38 @@ class RemoteDataSource {
                 "jumlah" to item.jumlah,
                 "satuan" to item.satuan,
                 "keterangan" to item.keterangan,
-                "added_time" to item.addedTime,
+                "addedTime" to item.addedTime,
         )
         db.collection("item").document("${item.id}")
                 .set(newItem)
                 .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
                 .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
         return true
+    }
+
+    fun getAllItem() : LiveData<ArrayList<Item>> {
+        val results = MutableLiveData<ArrayList<Item>>()
+        db.collection("item").addSnapshotListener { value, error ->
+            val listItem = ArrayList<Item>()
+            for (dc: DocumentChange in value?.documentChanges!!) {
+                if (dc.type == DocumentChange.Type.ADDED) {
+                    listItem.add(dc.document.toObject(Item::class.java))
+                }
+            }
+            results.postValue(listItem)
+        }
+        return results
+    }
+
+    fun getDailyItem(tanggal: String) : LiveData<ArrayList<Item>> {
+        val results = MutableLiveData<ArrayList<Item>>()
+        db.collection("item").whereEqualTo("tanggal", tanggal).addSnapshotListener{ value, error ->
+            val listItem = ArrayList<Item>()
+            for (dc: DocumentChange in value?.documentChanges!!) {
+                listItem.add(dc.document.toObject(Item::class.java))
+            }
+            results.postValue(listItem)
+        }
+        return results
     }
 }

@@ -63,28 +63,27 @@
             </LinearLayout>
 
             <TextView
-                style="@style/Text.Medium"
+                style="@style/Text.Regular"
                 android:text="@string/sales"
                 android:layout_marginTop="16dp"/>
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_sales"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords"/>
 
             <TextView
-                style="@style/Text.Medium"
+                style="@style/Text.Regular"
                 android:text="@string/jenis_barang"
                 android:layout_marginTop="16dp"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/pilih_barang"
                 android:layout_marginTop="8dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
 
                 <AutoCompleteTextView
-                    style="@style/Text.Medium"
                     android:id="@+id/actv_barang"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -94,7 +93,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                style="@style/Text.Medium"
+                style="@style/Text.Regular"
                 android:text="@string/jumlah"
                 android:layout_marginTop="16dp"/>
 
@@ -125,7 +124,6 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/actv_satuan"
-                        style="@style/Text.Medium"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none"
@@ -135,13 +133,14 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                style="@style/Text.Medium"
+                style="@style/Text.Regular"
                 android:text="@string/keterangan"
                 android:layout_marginTop="16dp"/>
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_keterangan"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences"/>
 
             <Button
                 android:id="@+id/btn_submit"
