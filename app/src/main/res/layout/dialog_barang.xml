@@ -1,0 +1,99 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/bg_dialog_bottom">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp"
+        android:layout_margin="20dp"
+        app:cardElevation="20dp">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/img_kayu_aro"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/kayu_aro" />
+    </androidx.cardview.widget.CardView>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                style="@style/Text.Regular"
+                android:layout_width="110dp"
+                android:text="@string/kode"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/Text.Regular"
+                android:layout_width="20dp"
+                android:text="@string/dots" />
+
+            <TextView
+                style="@style/Text.Regular"
+                android:id="@+id/tv_kode"
+                android:text="@string/kode_barang" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                style="@style/Text.Regular"
+                android:layout_width="110dp"
+                android:text="@string/nama"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/Text.Regular"
+                android:layout_width="20dp"
+                android:text="@string/dots" />
+
+            <TextView
+                style="@style/Text.Regular"
+                android:id="@+id/tv_nama"
+                android:text="@string/nama_barang" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp">
+
+        <TextView
+            style="@style/Text.Regular"
+            android:layout_width="110dp"
+            android:text="@string/keterangan"
+            android:textStyle="bold" />
+
+        <TextView
+            style="@style/Text.Regular"
+            android:layout_width="20dp"
+            android:text="@string/dots" />
+
+        <TextView
+            style="@style/Text.Regular"
+            android:id="@+id/tv_keterangan"
+            android:text="@string/keterangan_tambahan" />
+
+        </TableRow>
+    </TableLayout>
+</LinearLayout>
+
+

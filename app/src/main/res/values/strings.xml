@@ -9,7 +9,7 @@
     <string name="kode_barang">Kode Jenis Barang</string>
     <string name="nama_barang">Nama Jenis Barang</string>
     <string name="simpan">Simpan Data</string>
-    <string name="keterangan">Keterangan Tambahan</string>
+    <string name="keterangan_tambahan">Keterangan Tambahan</string>
     <string name="delete">Hapus</string>
     <string name="delete_barang">Hapus data barang ini ?</string>
     <string name="no">Tidak</string>
@@ -21,7 +21,6 @@
     <string name="pengambilan_barang">Pengambilan Barang Hari Ini</string>
     <string name="data_saya">Data Saya</string>
     <string name="data_all">Semua Data</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="data_pengambilan_barang">Data Pengambilan Barang</string>
     <string name="form_pengambilan_barang">Form Pengambilan Barang</string>
@@ -42,4 +41,9 @@
     <string name="kayu_aro">Kayu Aro</string>
     <string name="gudang">Gudang</string>
     <string name="sbutk">SBUTK</string>
+    <string name="dots"> : </string>
+    <string name="tanggal_pengambilan">Tanggal</string>
+    <string name="keterangan">Keterangan</string>
+    <string name="kode">Kode Barang</string>
+    <string name="nama">Nama Barang</string>
 </resources>

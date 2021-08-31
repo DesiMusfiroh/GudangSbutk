@@ -1,0 +1,126 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_dialog_bottom">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                style="@style/Text.Regular"
+                android:layout_width="110dp"
+                android:text="@string/sales"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/Text.Regular"
+                android:layout_width="20dp"
+                android:text="@string/dots" />
+
+            <TextView
+                style="@style/Text.Regular"
+                android:id="@+id/tv_sales"
+                android:text="@string/sales" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                style="@style/Text.Regular"
+                android:layout_width="110dp"
+                android:text="@string/jenis_barang"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/Text.Regular"
+                android:layout_width="20dp"
+                android:text="@string/dots" />
+
+            <TextView
+                style="@style/Text.Regular"
+                android:id="@+id/tv_barang"
+                android:text="@string/nama_barang" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                style="@style/Text.Regular"
+                android:layout_width="110dp"
+                android:text="@string/jumlah"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/Text.Regular"
+                android:layout_width="20dp"
+                android:text="@string/dots" />
+
+            <TextView
+                style="@style/Text.Regular"
+                android:id="@+id/tv_jumlah"
+                android:text="@string/jumlah" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                style="@style/Text.Regular"
+                android:layout_width="110dp"
+                android:text="@string/tanggal_pengambilan"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/Text.Regular"
+                android:layout_width="20dp"
+                android:text="@string/dots" />
+
+            <TextView
+                style="@style/Text.Regular"
+                android:id="@+id/tv_tanggal"
+                android:text="@string/tanggal" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                style="@style/Text.Regular"
+                android:layout_width="110dp"
+                android:text="@string/keterangan"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/Text.Regular"
+                android:layout_width="20dp"
+                android:text="@string/dots" />
+
+            <TextView
+                style="@style/Text.Regular"
+                android:id="@+id/tv_keterangan"
+                android:text="@string/keterangan_tambahan" />
+        </TableRow>
+    </TableLayout>
+</LinearLayout>
+
+

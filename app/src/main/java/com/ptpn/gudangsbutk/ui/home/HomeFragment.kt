@@ -9,6 +9,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.itextpdf.text.Document
 import com.itextpdf.text.Paragraph
@@ -29,6 +32,7 @@ import com.ptpn.gudangsbutk.utils.generateFile
 import com.ptpn.gudangsbutk.utils.goToFileIntent
 import com.ptpn.gudangsbutk.viewmodel.ViewModelFactory
 import java.io.FileOutputStream
+import java.lang.StringBuilder
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -102,11 +106,30 @@ class HomeFragment : Fragment() {
                 }
                 itemAdapter.setOnItemClickCallback(object : HomeItemAdapter.OnItemClickCallback {
                     override fun onItemClicked(data: Item) {
-
+                        showDialogItem(data)
                     }
                 })
             }
         })
+    }
+
+    private fun showDialogItem(data: Item) {
+        val dialog = BottomSheetDialog(requireContext())
+        val view = layoutInflater.inflate(R.layout.dialog_item, null)
+        val tvSales = view.findViewById<TextView>(R.id.tv_sales)
+        val tvBarang = view.findViewById<TextView>(R.id.tv_barang)
+        val tvJumlah = view.findViewById<TextView>(R.id.tv_jumlah)
+        val tvTanggal = view.findViewById<TextView>(R.id.tv_tanggal)
+        val tvKeterangan = view.findViewById<TextView>(R.id.tv_keterangan)
+
+        tvSales.text = data.sales
+        tvBarang.text = data.barang
+        tvJumlah.text = StringBuilder("${data.jumlah} ${data.satuan}")
+        tvTanggal.text = data.tanggal
+        tvKeterangan.text = data.keterangan
+
+        dialog.setContentView(view)
+        dialog.show()
     }
 
     private fun populateBarang() {
@@ -123,11 +146,31 @@ class HomeFragment : Fragment() {
                 barangAdapter.setOnItemClickCallback(object :
                     HomeBarangAdapter.OnItemClickCallback {
                     override fun onItemClicked(data: Barang) {
-
+                        showDialogBarang(data)
                     }
                 })
             }
         })
+    }
+
+    private fun showDialogBarang(data: Barang) {
+        val dialog = BottomSheetDialog(requireContext())
+        val view = layoutInflater.inflate(R.layout.dialog_barang, null)
+        val tvKode = view.findViewById<TextView>(R.id.tv_kode)
+        val tvNama = view.findViewById<TextView>(R.id.tv_nama)
+        val tvKeterangan = view.findViewById<TextView>(R.id.tv_keterangan)
+        val image = view.findViewById<ImageView>(R.id.image)
+
+        tvKode.text = data.kode
+        tvNama.text = data.nama
+        tvKeterangan.text = data.keterangan
+        Glide.with(requireContext())
+                .load(data.image)
+                .apply(RequestOptions.placeholderOf(R.drawable.ic_loading).error(R.drawable.ic_error))
+                .into(image)
+
+        dialog.setContentView(view)
+        dialog.show()
     }
 
     private fun getCSVFileName() : String = "Pengambilan Barang $tanggal.csv"

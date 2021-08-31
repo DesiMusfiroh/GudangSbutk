@@ -132,7 +132,7 @@
 
             <TextView
                 style="@style/Text.Regular"
-                android:text="@string/keterangan"
+                android:text="@string/keterangan_tambahan"
                 android:layout_marginTop="10dp"/>
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_keterangan"
