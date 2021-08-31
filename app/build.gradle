@@ -82,4 +82,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation "com.github.doyaaaaaken:kotlin-csv-jvm:0.9.0"
 
+    // write pdf
+    implementation 'com.itextpdf:itextg:5.5.10'
+    implementation 'com.karumi:dexter:5.0.0'
 }

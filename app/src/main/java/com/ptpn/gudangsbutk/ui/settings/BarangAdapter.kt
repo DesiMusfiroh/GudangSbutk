@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ptpn.gudangsbutk.data.Barang
 import com.ptpn.gudangsbutk.databinding.ItemBarangBinding
+import java.lang.StringBuilder
 
 class BarangAdapter(private val listBarang: ArrayList<Barang>, val context: Context) : RecyclerView.Adapter<BarangAdapter.BarangViewHolder>() {
     private lateinit var onItemClickCallback: OnItemClickCallback
@@ -36,8 +37,7 @@ class BarangAdapter(private val listBarang: ArrayList<Barang>, val context: Cont
     class BarangViewHolder(private val binding: ItemBarangBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(barang: Barang) {
             with(binding) {
-                tvNama.text = barang.nama
-                tvKode.text = barang.kode
+                tvNama.text = StringBuilder("${barang.kode}  -  ${barang.nama}")
             }
         }
     }

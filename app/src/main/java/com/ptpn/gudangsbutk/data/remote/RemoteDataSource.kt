@@ -164,4 +164,16 @@ class RemoteDataSource {
         }
         return results
     }
+
+    fun getUserItem(user: String) : LiveData<ArrayList<Item>> {
+        val results = MutableLiveData<ArrayList<Item>>()
+        db.collection("item").whereEqualTo("user", user).addSnapshotListener{ value, error ->
+            val listItem = ArrayList<Item>()
+            for (dc: DocumentChange in value?.documentChanges!!) {
+                listItem.add(dc.document.toObject(Item::class.java))
+            }
+            results.postValue(listItem)
+        }
+        return results
+    }
 }

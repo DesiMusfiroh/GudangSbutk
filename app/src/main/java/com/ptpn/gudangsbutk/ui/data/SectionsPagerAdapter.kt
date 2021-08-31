@@ -18,7 +18,7 @@ class SectionsPagerAdapter(private val mContext: DataFragment, fm: FragmentManag
 
     override fun getItem(position: Int): Fragment =
         when (position) {
-            0 -> DataSayaFragment()
+            0 -> DataUserFragment()
             1 -> DataAllFragment()
             else -> Fragment()
         }
