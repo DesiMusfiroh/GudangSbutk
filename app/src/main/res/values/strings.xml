@@ -52,4 +52,7 @@
     <string name="daftar_item">Daftar Item Barang</string>
     <string name="id">id : -----</string>
     <string name="message">Pesan Alert</string>
+    <string name="jumlah_item">Jumlah Item</string>
+    <string name="no_form">No Form : -----</string>
+    <string name="nomor">No</string>
 </resources>

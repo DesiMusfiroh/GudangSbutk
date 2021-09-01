@@ -31,6 +31,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapCharacters"
+                android:background="@drawable/bg_input"
+                android:padding="10dp"
+                android:layout_marginTop="8dp"
                 android:maxLines="1"/>
 
             <TextView
@@ -42,6 +45,9 @@
                 android:id="@+id/et_nama"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bg_input"
+                android:padding="10dp"
+                android:layout_marginTop="8dp"
                 android:inputType="textCapWords"/>
 
             <TextView
@@ -53,6 +59,9 @@
                 android:id="@+id/et_keterangan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bg_input"
+                android:padding="10dp"
+                android:layout_marginTop="8dp"
                 android:inputType="textCapSentences"/>
 
             <androidx.appcompat.widget.AppCompatButton

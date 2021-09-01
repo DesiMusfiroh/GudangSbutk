@@ -23,5 +23,4 @@ class DataFragment : Fragment() {
             tabs.setupWithViewPager(viewPager)
         }
     }
-
 }

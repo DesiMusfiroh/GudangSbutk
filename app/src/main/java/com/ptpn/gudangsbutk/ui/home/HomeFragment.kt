@@ -1,7 +1,10 @@
 package com.ptpn.gudangsbutk.ui.home
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -16,6 +19,7 @@ import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
@@ -26,7 +30,7 @@ import com.itextpdf.text.Paragraph
 import com.itextpdf.text.pdf.PdfWriter
 import com.ptpn.gudangsbutk.R
 import com.ptpn.gudangsbutk.data.Barang
-import com.ptpn.gudangsbutk.data.ItemLama
+import com.ptpn.gudangsbutk.data.Data
 import com.ptpn.gudangsbutk.databinding.FragmentHomeBinding
 import com.ptpn.gudangsbutk.utils.generateFile
 import com.ptpn.gudangsbutk.utils.goToFileIntent
@@ -42,9 +46,9 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: HomeViewModel
     private lateinit var mAuth: FirebaseAuth
     private lateinit var barangAdapter: HomeBarangAdapter
-    private lateinit var itemAdapter: HomeItemAdapter
+    private lateinit var dataAdapter: DataAdapter
     private lateinit var tanggal: String
-    private lateinit var itemResponse: List<ItemLama>
+    private lateinit var dataResponse: List<Data>
     companion object {
         private const val PERMISSION_CODE = 1001
     }
@@ -76,58 +80,56 @@ class HomeFragment : Fragment() {
         )
 
         populateBarang()
-        populateItem()
+        populateData()
         binding.btnExportExcel.setOnClickListener { exportExcel() }
         binding.btnExportPdf.setOnClickListener { exportPdf() }
-//        Dexter.withActivity(requireActivity())
-//                .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                .withListener(object : PermissionListener {
-//                    override fun onPermissionGranted(response: PermissionGrantedResponse) {
-//                        binding.btnExportPdf.setOnClickListener { exportPdf() }
-//                    }
-//                    override fun onPermissionDenied(response: PermissionDeniedResponse) {
-//                    }
-//                    override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest?, token: PermissionToken?) {
-//                    }
-//                }).check()
     }
 
-    private fun populateItem() {
-        viewModel.getDailyItem(tanggal).observe(viewLifecycleOwner, { listItem ->
-            itemResponse = listItem
-            if (listItem !== null) {
-                itemAdapter = HomeItemAdapter(listItem, requireContext())
-                itemAdapter.notifyDataSetChanged()
+    private fun populateData() {
+        viewModel.getDailyData(tanggal).observe(viewLifecycleOwner, { data ->
+            dataResponse = data
+            if (data !== null) {
+                dataAdapter = DataAdapter(data, requireContext())
+                dataAdapter.notifyDataSetChanged()
 
                 binding.apply {
                     rvItem.layoutManager = LinearLayoutManager(context)
                     rvItem.setHasFixedSize(true)
-                    rvItem.adapter = itemAdapter
+                    rvItem.adapter = dataAdapter
                 }
-                itemAdapter.setOnItemClickCallback(object : HomeItemAdapter.OnItemClickCallback {
-                    override fun onItemClicked(data: ItemLama) {
-                        showDialogItem(data)
+                dataAdapter.setOnItemClickCallback(object : DataAdapter.OnItemClickCallback {
+                    override fun onItemClicked(data: Data) {
+                        showDialogData(data)
                     }
                 })
             }
         })
     }
 
-    private fun showDialogItem(data: ItemLama) {
+    @SuppressLint("InflateParams")
+    private fun showDialogData(data: Data) {
         val dialog = BottomSheetDialog(requireContext())
-        val view = layoutInflater.inflate(R.layout.dialog_item, null)
+        val view = layoutInflater.inflate(R.layout.dialog_data, null)
         val tvSales = view.findViewById<TextView>(R.id.tv_sales)
-        val tvBarang = view.findViewById<TextView>(R.id.tv_barang)
-        val tvJumlah = view.findViewById<TextView>(R.id.tv_jumlah)
         val tvTanggal = view.findViewById<TextView>(R.id.tv_tanggal)
         val tvKeterangan = view.findViewById<TextView>(R.id.tv_keterangan)
+        val tvAddedTime = view.findViewById<TextView>(R.id.tv_added_time)
+        val tvId = view.findViewById<TextView>(R.id.tv_id)
+        val rvItem = view.findViewById<RecyclerView>(R.id.rv_item)
+
+        val itemAdapter = data.item?.let { ItemAdapter(it, requireContext()) }
+        itemAdapter?.notifyDataSetChanged()
+        rvItem.layoutManager = LinearLayoutManager(context)
+        rvItem.setHasFixedSize(true)
+        rvItem.adapter = itemAdapter
 
         tvSales.text = data.sales
-        tvBarang.text = data.barang
-        tvJumlah.text = StringBuilder("${data.jumlah} ${data.satuan}")
         tvTanggal.text = data.tanggal
         tvKeterangan.text = data.keterangan
+        tvAddedTime.text = data.addedTime
+        tvId.text = StringBuilder("No Form : ${data.id?.substring(0, 13)}")
 
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setContentView(view)
         dialog.show()
     }
@@ -179,20 +181,24 @@ class HomeFragment : Fragment() {
         val csvFile = generateFile(requireContext(), getCSVFileName())
         if (csvFile != null) {
             csvWriter().open(csvFile, append = false) {
-                writeRow(listOf("No", "Tanggal", "Sales", "Barang", "Jumlah", "Satuan", "Keterangan", "Added Time"))
-                itemResponse.forEachIndexed { index, item ->
-                    writeRow(
-                        listOf(
-                            index + 1,
-                            item.tanggal,
-                            item.sales,
-                            item.barang,
-                            item.jumlah,
-                            item.satuan,
-                            item.keterangan,
-                            item.addedTime
+                writeRow(listOf("No","Kode", "Tanggal", "Sales", "Keterangan", "Barang", "Jumlah", "Satuan", "Catatan", "Added Time"))
+                dataResponse.forEachIndexed { index, data ->
+                    data.item?.forEach{ item ->
+                        writeRow(
+                                listOf(
+                                        index + 1,
+                                        data.id?.substring(0,13),
+                                        data.tanggal,
+                                        data.sales,
+                                        data.keterangan,
+                                        item.barang,
+                                        item.jumlah,
+                                        item.satuan,
+                                        item.catatan,
+                                        data.addedTime,
+                                )
                         )
-                    )
+                    }
                 }
             }
             Toast.makeText(requireContext(), getString(R.string.csv_file_generated_text), Toast.LENGTH_LONG).show()

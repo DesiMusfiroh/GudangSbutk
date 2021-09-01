@@ -6,6 +6,23 @@
     android:orientation="vertical"
     android:background="@drawable/bg_dialog_bottom">
 
+    <TextView
+        style="@style/Text.Regular"
+        android:id="@+id/tv_id"
+        android:layout_width="wrap_content"
+        android:text="@string/no_form"
+        android:textStyle="bold"
+        android:layout_gravity="end"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        style="@style/Text.Small"
+        android:id="@+id/tv_added_time"
+        android:layout_width="wrap_content"
+        android:text="@string/added_time"
+        android:layout_gravity="end"
+        android:layout_marginBottom="4dp"/>
+
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,50 +48,6 @@
                 style="@style/Text.Regular"
                 android:id="@+id/tv_sales"
                 android:text="@string/sales" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp">
-
-            <TextView
-                style="@style/Text.Regular"
-                android:layout_width="110dp"
-                android:text="@string/jenis_barang"
-                android:textStyle="bold" />
-
-            <TextView
-                style="@style/Text.Regular"
-                android:layout_width="20dp"
-                android:text="@string/dots" />
-
-            <TextView
-                style="@style/Text.Regular"
-                android:id="@+id/tv_barang"
-                android:text="@string/nama_barang" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp">
-
-            <TextView
-                style="@style/Text.Regular"
-                android:layout_width="110dp"
-                android:text="@string/jumlah"
-                android:textStyle="bold" />
-
-            <TextView
-                style="@style/Text.Regular"
-                android:layout_width="20dp"
-                android:text="@string/dots" />
-
-            <TextView
-                style="@style/Text.Regular"
-                android:id="@+id/tv_jumlah"
-                android:text="@string/jumlah" />
         </TableRow>
 
         <TableRow
@@ -121,6 +94,20 @@
                 android:text="@string/keterangan_tambahan" />
         </TableRow>
     </TableLayout>
+
+    <TextView
+        style="@style/Text.Regular"
+        android:layout_width="wrap_content"
+        android:text="@string/daftar_item"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/item_dialog_data"
+        android:layout_marginTop="8dp"/>
 </LinearLayout>
 
 

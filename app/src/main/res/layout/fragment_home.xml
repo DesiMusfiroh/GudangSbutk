@@ -173,7 +173,7 @@
                 android:id="@+id/rv_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/item_data_home"/>
+                tools:listitem="@layout/item_data"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

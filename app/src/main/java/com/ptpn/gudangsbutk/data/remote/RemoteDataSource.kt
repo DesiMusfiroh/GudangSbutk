@@ -10,7 +10,6 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.ptpn.gudangsbutk.data.Barang
 import com.ptpn.gudangsbutk.data.Data
-import com.ptpn.gudangsbutk.data.ItemLama
 
 class RemoteDataSource {
     private val db = Firebase.firestore
@@ -150,58 +149,24 @@ class RemoteDataSource {
         return results
     }
 
-
-    fun insertItem(item: ItemLama) : Boolean {
-        val newItem = hashMapOf(
-                "id" to item.id,
-                "user" to item.user,
-                "tanggal" to item.tanggal,
-                "sales" to item.sales,
-                "barang" to item.barang,
-                "jumlah" to item.jumlah,
-                "satuan" to item.satuan,
-                "keterangan" to item.keterangan,
-                "addedTime" to item.addedTime,
-        )
-        db.collection("item").document("${item.id}")
-                .set(newItem)
-                .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
-                .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
-        return true
-    }
-
-    fun getAllItem() : LiveData<ArrayList<ItemLama>> {
-        val results = MutableLiveData<ArrayList<ItemLama>>()
-        db.collection("item").addSnapshotListener { value, error ->
-            val listItem = ArrayList<ItemLama>()
+    fun getAllData() : LiveData<ArrayList<Data>> {
+        val results = MutableLiveData<ArrayList<Data>>()
+        db.collection("data").addSnapshotListener{ value, error ->
+            val listItem = ArrayList<Data>()
             for (dc: DocumentChange in value?.documentChanges!!) {
-                if (dc.type == DocumentChange.Type.ADDED) {
-                    listItem.add(dc.document.toObject(ItemLama::class.java))
-                }
+                listItem.add(dc.document.toObject(Data::class.java))
             }
             results.postValue(listItem)
         }
         return results
     }
 
-    fun getDailyItem(tanggal: String) : LiveData<ArrayList<ItemLama>> {
-        val results = MutableLiveData<ArrayList<ItemLama>>()
-        db.collection("item").whereEqualTo("tanggal", tanggal).addSnapshotListener{ value, error ->
-            val listItem = ArrayList<ItemLama>()
+    fun getUserData(user: String) : LiveData<ArrayList<Data>> {
+        val results = MutableLiveData<ArrayList<Data>>()
+        db.collection("data").whereEqualTo("user", user).addSnapshotListener{ value, error ->
+            val listItem = ArrayList<Data>()
             for (dc: DocumentChange in value?.documentChanges!!) {
-                listItem.add(dc.document.toObject(ItemLama::class.java))
-            }
-            results.postValue(listItem)
-        }
-        return results
-    }
-
-    fun getUserItem(user: String) : LiveData<ArrayList<ItemLama>> {
-        val results = MutableLiveData<ArrayList<ItemLama>>()
-        db.collection("item").whereEqualTo("user", user).addSnapshotListener{ value, error ->
-            val listItem = ArrayList<ItemLama>()
-            for (dc: DocumentChange in value?.documentChanges!!) {
-                listItem.add(dc.document.toObject(ItemLama::class.java))
+                listItem.add(dc.document.toObject(Data::class.java))
             }
             results.postValue(listItem)
         }

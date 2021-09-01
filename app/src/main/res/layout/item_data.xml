@@ -26,12 +26,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_barang"
+            android:id="@+id/tv_keterangan"
             style="@style/Text.Regular"
             android:layout_width="0dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="10dp"
-            android:text="@string/nama_barang"
+            android:text="@string/keterangan"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tv_jumlah"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +41,7 @@
             android:id="@+id/tv_jumlah"
             style="@style/Text.Regular"
             android:layout_width="0dp"
-            android:text="@string/jumlah"
+            android:text="@string/jumlah_item"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

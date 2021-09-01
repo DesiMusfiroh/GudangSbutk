@@ -11,5 +11,5 @@ data class Data(
         val sales: String? = null,
         val keterangan: String? = null,
         val addedTime: String? = null,
-        val item: ArrayList<Item>?
+        val item: ArrayList<Item>? = null,
 ) : Parcelable

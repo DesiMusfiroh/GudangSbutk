@@ -1,5 +1,8 @@
 package com.ptpn.gudangsbutk.ui.data
 
+import android.annotation.SuppressLint
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,18 +11,21 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.ptpn.gudangsbutk.R
-import com.ptpn.gudangsbutk.data.ItemLama
+import com.ptpn.gudangsbutk.data.Data
 import com.ptpn.gudangsbutk.databinding.FragmentDataAllBinding
-import com.ptpn.gudangsbutk.ui.home.HomeItemAdapter
+import com.ptpn.gudangsbutk.ui.home.DataAdapter
+import com.ptpn.gudangsbutk.ui.home.ItemAdapter
 import com.ptpn.gudangsbutk.viewmodel.ViewModelFactory
 import java.lang.StringBuilder
 
 class DataAllFragment : Fragment() {
     private lateinit var binding: FragmentDataAllBinding
     private lateinit var viewModel: DataViewModel
-    private lateinit var itemAdapter: HomeItemAdapter
+    private lateinit var dataAdapter: DataAdapter
+    private lateinit var dataResponse: List<Data>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentDataAllBinding.inflate(layoutInflater, container, false)
@@ -31,45 +37,56 @@ class DataAllFragment : Fragment() {
         val factory = ViewModelFactory.getInstance(requireActivity())
         viewModel = ViewModelProvider(this, factory)[DataViewModel::class.java]
 
-        populateItem()
+        populateData()
     }
 
-    private fun populateItem() {
-        viewModel.getAllItem().observe(viewLifecycleOwner, { listItem ->
-            if (listItem !== null) {
-                itemAdapter = HomeItemAdapter(listItem, requireContext())
-                itemAdapter.notifyDataSetChanged()
+    private fun populateData() {
+        viewModel.getAllData().observe(viewLifecycleOwner, { data ->
+            dataResponse = data
+            if (data !== null) {
+                dataAdapter = DataAdapter(data, requireContext())
+                dataAdapter.notifyDataSetChanged()
 
                 binding.apply {
                     rvItem.layoutManager = LinearLayoutManager(context)
                     rvItem.setHasFixedSize(true)
-                    rvItem.adapter = itemAdapter
+                    rvItem.adapter = dataAdapter
                 }
-                itemAdapter.setOnItemClickCallback(object : HomeItemAdapter.OnItemClickCallback {
-                    override fun onItemClicked(data: ItemLama) {
-                        showDialogItem(data)
+                dataAdapter.setOnItemClickCallback(object : DataAdapter.OnItemClickCallback {
+                    override fun onItemClicked(data: Data) {
+                        showDialogData(data)
                     }
                 })
             }
         })
     }
 
-    private fun showDialogItem(data: ItemLama) {
+    @SuppressLint("InflateParams")
+    private fun showDialogData(data: Data) {
         val dialog = BottomSheetDialog(requireContext())
-        val view = layoutInflater.inflate(R.layout.dialog_item, null)
+        val view = layoutInflater.inflate(R.layout.dialog_data, null)
         val tvSales = view.findViewById<TextView>(R.id.tv_sales)
-        val tvBarang = view.findViewById<TextView>(R.id.tv_barang)
-        val tvJumlah = view.findViewById<TextView>(R.id.tv_jumlah)
         val tvTanggal = view.findViewById<TextView>(R.id.tv_tanggal)
         val tvKeterangan = view.findViewById<TextView>(R.id.tv_keterangan)
+        val tvAddedTime = view.findViewById<TextView>(R.id.tv_added_time)
+        val tvId = view.findViewById<TextView>(R.id.tv_id)
+        val rvItem = view.findViewById<RecyclerView>(R.id.rv_item)
+
+        val itemAdapter = data.item?.let { ItemAdapter(it, requireContext()) }
+        itemAdapter?.notifyDataSetChanged()
+        rvItem.layoutManager = LinearLayoutManager(context)
+        rvItem.setHasFixedSize(true)
+        rvItem.adapter = itemAdapter
 
         tvSales.text = data.sales
-        tvBarang.text = data.barang
-        tvJumlah.text = StringBuilder("${data.jumlah} ${data.satuan}")
         tvTanggal.text = data.tanggal
         tvKeterangan.text = data.keterangan
+        tvAddedTime.text = data.addedTime
+        tvId.text = StringBuilder("No Form : ${data.id?.substring(0, 13)}")
 
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setContentView(view)
         dialog.show()
     }
+
 }
