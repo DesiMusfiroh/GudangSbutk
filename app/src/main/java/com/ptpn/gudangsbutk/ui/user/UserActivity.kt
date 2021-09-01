@@ -51,7 +51,7 @@ class UserActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    fun onClickWhatsApp() {
+    private fun onClickWhatsApp() {
         val phoneDeveloper = +6287833226468
         val message = "Hi, I am ${mAuth.currentUser?.displayName}. Sorry to interrupt, I need some help with this app [Gudang SBUTK] ! ....."
         try {

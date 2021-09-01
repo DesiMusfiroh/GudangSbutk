@@ -1,5 +1,6 @@
 package com.ptpn.gudangsbutk.ui.form
 
+import android.app.DatePickerDialog
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -70,6 +71,20 @@ class FormFragment : Fragment(), View.OnClickListener {
         binding.btnSubmit.setOnClickListener(this)
         binding.btnTanggal.setOnClickListener(this)
         binding.btnAdd.setOnClickListener(this)
+
+        val calender = Calendar.getInstance()
+        val datePicker = DatePickerDialog.OnDateSetListener { _, year, month, day ->
+            calender.set(Calendar.YEAR, year)
+            calender.set(Calendar.MONTH, month)
+            calender.set(Calendar.DAY_OF_MONTH, day)
+            updateTanggal(calender.time)
+        }
+        binding.btnTanggal.setOnClickListener {
+            DatePickerDialog(requireContext(), datePicker,
+                calender.get(Calendar.YEAR),
+                calender.get(Calendar.MONTH),
+                calender.get(Calendar.DAY_OF_MONTH)).show()
+        }
     }
 
     override fun onClick(v: View) {
@@ -201,5 +216,12 @@ class FormFragment : Fragment(), View.OnClickListener {
             tvMessage.text = StringBuilder("Gagal !!. \nData pengambilan barang  \nbelum berhasil disimpan!")
         }
         dialog.show()
+    }
+
+    private fun updateTanggal(calender: Date) {
+        val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+        tanggal = dateFormat.format(calender)
+        binding.tvTanggal.text = tanggal
+        Toast.makeText(requireContext(), "Tanggal form diubah = $tanggal", Toast.LENGTH_SHORT).show()
     }
 }

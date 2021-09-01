@@ -2,6 +2,8 @@ package com.ptpn.gudangsbutk.ui.home
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -40,9 +42,9 @@ import com.ptpn.gudangsbutk.utils.generateFile
 import com.ptpn.gudangsbutk.utils.goToFileIntent
 import com.ptpn.gudangsbutk.viewmodel.ViewModelFactory
 import java.io.FileOutputStream
-import java.lang.StringBuilder
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 @Suppress("DEPRECATION")
 class HomeFragment : Fragment() {
@@ -52,6 +54,7 @@ class HomeFragment : Fragment() {
     private lateinit var barangAdapter: HomeBarangAdapter
     private lateinit var dataAdapter: DataAdapter
     private lateinit var tanggal: String
+    private lateinit var title: String
     private lateinit var dataResponse: List<Data>
     companion object {
         private const val PERMISSION_CODE = 1001
@@ -77,6 +80,14 @@ class HomeFragment : Fragment() {
         val tanggalFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
         tanggal = tanggalFormat.format(date)
 
+        val calender = Calendar.getInstance()
+        val datePicker = OnDateSetListener{ _, year, month, day ->
+            calender.set(Calendar.YEAR, year)
+            calender.set(Calendar.MONTH, month)
+            calender.set(Calendar.DAY_OF_MONTH, day)
+            updateTanggal(calender.time)
+        }
+
         binding.tvUser.text = getString(R.string.hai_user, currentUser?.displayName)
         binding.tvDate.text = currentDate
         Glide.with(requireContext()).load(currentUser?.photoUrl).apply(RequestOptions.circleCropTransform()).into(
@@ -84,16 +95,23 @@ class HomeFragment : Fragment() {
         )
         binding.shimmerRvBarang.startShimmer()
         populateBarang()
-        populateData()
+        populateData(tanggal)
+
         binding.btnExportExcel.setOnClickListener { exportExcel() }
         binding.btnExportPdf.setOnClickListener { exportPdf() }
         binding.btnUser.setOnClickListener {
             val userIntent = Intent(requireContext(), UserActivity::class.java)
             startActivity(userIntent)
         }
+        binding.btnTanggal.setOnClickListener {
+            DatePickerDialog(requireContext(), datePicker,
+                    calender.get(Calendar.YEAR),
+                    calender.get(Calendar.MONTH),
+                    calender.get(Calendar.DAY_OF_MONTH)).show()
+        }
     }
 
-    private fun populateData() {
+    private fun populateData(tanggal: String) {
         viewModel.getDailyData(tanggal).observe(viewLifecycleOwner, { data ->
             dataResponse = data
             if (data !== null) {
@@ -177,10 +195,9 @@ class HomeFragment : Fragment() {
         tvKode.text = data.kode
         tvNama.text = data.nama
         tvKeterangan.text = data.keterangan
-        Glide.with(requireContext())
-                .load(data.image)
-                .apply(RequestOptions.placeholderOf(R.drawable.ic_loading).error(R.drawable.ic_error))
-                .into(image)
+        Glide.with(requireContext()).load(data.image).apply(
+            RequestOptions.placeholderOf(R.drawable.ic_loading).error(R.drawable.ic_error)
+        ).into(image)
 
         dialog.setContentView(view)
         dialog.show()
@@ -192,31 +209,52 @@ class HomeFragment : Fragment() {
         val csvFile = generateFile(requireContext(), getCSVFileName())
         if (csvFile != null) {
             csvWriter().open(csvFile, append = false) {
-                writeRow(listOf("No","Kode", "Tanggal", "Sales", "Keterangan", "Barang", "Jumlah", "Satuan", "Catatan", "Added Time"))
+                writeRow(
+                    listOf(
+                        "No",
+                        "Kode",
+                        "Tanggal",
+                        "Sales",
+                        "Keterangan",
+                        "Barang",
+                        "Jumlah",
+                        "Satuan",
+                        "Catatan",
+                        "Added Time"
+                    )
+                )
                 dataResponse.forEachIndexed { index, data ->
                     data.item?.forEach{ item ->
                         writeRow(
-                                listOf(
-                                        index + 1,
-                                        data.id?.substring(0,13),
-                                        data.tanggal,
-                                        data.sales,
-                                        data.keterangan,
-                                        item.barang,
-                                        item.jumlah,
-                                        item.satuan,
-                                        item.catatan,
-                                        data.addedTime,
-                                )
+                            listOf(
+                                index + 1,
+                                data.id?.substring(0, 13),
+                                data.tanggal,
+                                data.sales,
+                                data.keterangan,
+                                item.barang,
+                                item.jumlah,
+                                item.satuan,
+                                item.catatan,
+                                data.addedTime,
+                            )
                         )
                     }
                 }
             }
-            Toast.makeText(requireContext(), getString(R.string.csv_file_generated_text), Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.csv_file_generated_text),
+                Toast.LENGTH_LONG
+            ).show()
             val intent = goToFileIntent(requireContext(), csvFile)
             startActivity(intent)
         } else {
-            Toast.makeText(requireContext(), getString(R.string.csv_file_not_generated_text), Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.csv_file_not_generated_text),
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
@@ -258,11 +296,24 @@ class HomeFragment : Fragment() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         when (requestCode) {
             PERMISSION_CODE -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 savePdf()
             }
         }
+    }
+
+    private fun updateTanggal(calender: Date) {
+        val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+        tanggal = dateFormat.format(calender)
+        Toast.makeText(requireContext(), "Memuat data tanggal = $tanggal", Toast.LENGTH_SHORT).show()
+        populateData(tanggal)
+        title = "Pengambilan barang $tanggal"
+        binding.tvTitle.text = title
     }
 }
