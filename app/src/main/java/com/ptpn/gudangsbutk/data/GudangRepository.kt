@@ -25,10 +25,15 @@ class GudangRepository private constructor(
     fun updateBarang(barang: Barang, imageUri: Uri?): Boolean = remoteDataSource.updateBarang(barang, imageUri)
     fun getBarang(): LiveData<ArrayList<Barang>> = remoteDataSource.getBarang()
     fun deleteBarang(kode: String) = remoteDataSource.deleteBarang(kode)
-
     fun getListBarang() : LiveData<List<String>> = remoteDataSource.getListBarang()
-    fun insertItem(item: Item): Boolean = remoteDataSource.insertItem(item)
-    fun getAllItem(): LiveData<ArrayList<Item>> = remoteDataSource.getAllItem()
-    fun getDailyItem(tanggal: String): LiveData<ArrayList<Item>> = remoteDataSource.getDailyItem(tanggal)
-    fun getUserItem(user: String): LiveData<ArrayList<Item>> = remoteDataSource.getUserItem(user)
+
+    fun insertData(data: Data): Boolean = remoteDataSource.insertData(data)
+
+
+
+    fun insertItem(item: ItemLama): Boolean = remoteDataSource.insertItem(item)
+    fun getAllItem(): LiveData<ArrayList<ItemLama>> = remoteDataSource.getAllItem()
+    fun getDailyItem(tanggal: String): LiveData<ArrayList<ItemLama>> = remoteDataSource.getDailyItem(tanggal)
+    fun getUserItem(user: String): LiveData<ArrayList<ItemLama>> = remoteDataSource.getUserItem(user)
+
 }

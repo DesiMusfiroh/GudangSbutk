@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
-import com.ptpn.gudangsbutk.data.Item
+import com.ptpn.gudangsbutk.data.ItemLama
 import com.ptpn.gudangsbutk.databinding.FragmentDataUserBinding
 import com.ptpn.gudangsbutk.ui.home.HomeItemAdapter
 import com.ptpn.gudangsbutk.viewmodel.ViewModelFactory
@@ -45,7 +45,7 @@ class DataUserFragment : Fragment() {
                         rvItem.adapter = itemAdapter
                     }
                     itemAdapter.setOnItemClickCallback(object : HomeItemAdapter.OnItemClickCallback {
-                        override fun onItemClicked(data: Item) {
+                        override fun onItemClicked(data: ItemLama) {
 
                         }
                     })

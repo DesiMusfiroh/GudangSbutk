@@ -23,7 +23,7 @@
             android:textColor="@color/white" />
     </FrameLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,22 +34,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginHorizontal="20dp">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="20dp">
-
-                <ImageButton
-                    android:id="@+id/btn_tanggal"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_calender"
-                    android:scaleType="center"
-                    android:background="@drawable/bg_button" />
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="20dp"
+                android:gravity="end">
 
                 <TextView
                     style="@style/Text.Medium"
@@ -60,94 +53,93 @@
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="10dp"/>
 
+                <ImageButton
+                    android:id="@+id/btn_tanggal"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_calender"
+                    android:scaleType="center"
+                    android:background="@drawable/bg_button"
+                    android:contentDescription="@string/calender" />
             </LinearLayout>
 
             <TextView
                 style="@style/Text.Regular"
                 android:text="@string/sales"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="20dp"/>
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_sales"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textCapWords"/>
-
-            <TextView
-                style="@style/Text.Regular"
-                android:text="@string/jenis_barang"
-                android:layout_marginTop="10dp"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/Text.Medium"
+                android:textStyle="normal"
+                android:background="@drawable/bg_input"
+                android:padding="10dp"
                 android:layout_marginTop="8dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
-
-                <AutoCompleteTextView
-                    android:id="@+id/actv_barang"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    tools:ignore="LabelFor" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                style="@style/Text.Regular"
-                android:text="@string/jumlah"
-                android:layout_marginTop="10dp"/>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_jumlah"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:inputType="number"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/textInputLayout"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputLayout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/pilih_satuan"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/actv_satuan"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="none"
-                        tools:ignore="LabelFor" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords"
+                android:layout_marginHorizontal="20dp"/>
 
             <TextView
                 style="@style/Text.Regular"
                 android:text="@string/keterangan_tambahan"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="20dp"/>
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_keterangan"
+                style="@style/Text.Medium"
+                android:textStyle="normal"
+                android:background="@drawable/bg_input"
+                android:padding="10dp"
+                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapSentences"/>
+                android:inputType="textCapSentences"
+                android:layout_marginHorizontal="20dp"/>
 
-            <Button
-                style="@style/Button"
-                android:id="@+id/btn_submit"
-                android:layout_width="wrap_content"
-                android:text="@string/simpan"
-                android:layout_gravity="end"
-                android:layout_marginVertical="16dp"/>
+            <TextView
+                style="@style/Text.Regular"
+                android:text="@string/daftar_item"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="20dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                tools:listitem="@layout/item_form"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="20dp">
+
+                <Button
+                    style="@style/Button"
+                    android:id="@+id/btn_add"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/tambah_item"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_submit"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    style="@style/Button"
+                    android:id="@+id/btn_submit"
+                    android:layout_width="0dp"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/simpan"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/btn_add"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

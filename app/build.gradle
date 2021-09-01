@@ -85,4 +85,7 @@ dependencies {
     // write pdf
     implementation 'com.itextpdf:itextg:5.5.10'
     implementation 'com.karumi:dexter:5.0.0'
+
+    // lottie animation
+    implementation "com.airbnb.android:lottie:$lottie_version"
 }

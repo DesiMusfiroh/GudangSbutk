@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.ptpn.gudangsbutk.R
-import com.ptpn.gudangsbutk.data.Item
+import com.ptpn.gudangsbutk.data.ItemLama
 import com.ptpn.gudangsbutk.databinding.FragmentDataAllBinding
 import com.ptpn.gudangsbutk.ui.home.HomeItemAdapter
 import com.ptpn.gudangsbutk.viewmodel.ViewModelFactory
@@ -46,7 +46,7 @@ class DataAllFragment : Fragment() {
                     rvItem.adapter = itemAdapter
                 }
                 itemAdapter.setOnItemClickCallback(object : HomeItemAdapter.OnItemClickCallback {
-                    override fun onItemClicked(data: Item) {
+                    override fun onItemClicked(data: ItemLama) {
                         showDialogItem(data)
                     }
                 })
@@ -54,7 +54,7 @@ class DataAllFragment : Fragment() {
         })
     }
 
-    private fun showDialogItem(data: Item) {
+    private fun showDialogItem(data: ItemLama) {
         val dialog = BottomSheetDialog(requireContext())
         val view = layoutInflater.inflate(R.layout.dialog_item, null)
         val tvSales = view.findViewById<TextView>(R.id.tv_sales)

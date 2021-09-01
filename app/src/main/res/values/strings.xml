@@ -46,4 +46,10 @@
     <string name="keterangan">Keterangan</string>
     <string name="kode">Kode Barang</string>
     <string name="nama">Nama Barang</string>
+    <string name="tambah">Tambah</string>
+    <string name="tambah_item">Tambah Item</string>
+    <string name="catatan">Catatan</string>
+    <string name="daftar_item">Daftar Item Barang</string>
+    <string name="id">id : -----</string>
+    <string name="message">Pesan Alert</string>
 </resources>

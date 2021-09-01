@@ -26,7 +26,7 @@ import com.itextpdf.text.Paragraph
 import com.itextpdf.text.pdf.PdfWriter
 import com.ptpn.gudangsbutk.R
 import com.ptpn.gudangsbutk.data.Barang
-import com.ptpn.gudangsbutk.data.Item
+import com.ptpn.gudangsbutk.data.ItemLama
 import com.ptpn.gudangsbutk.databinding.FragmentHomeBinding
 import com.ptpn.gudangsbutk.utils.generateFile
 import com.ptpn.gudangsbutk.utils.goToFileIntent
@@ -44,7 +44,7 @@ class HomeFragment : Fragment() {
     private lateinit var barangAdapter: HomeBarangAdapter
     private lateinit var itemAdapter: HomeItemAdapter
     private lateinit var tanggal: String
-    private lateinit var itemResponse: List<Item>
+    private lateinit var itemResponse: List<ItemLama>
     companion object {
         private const val PERMISSION_CODE = 1001
     }
@@ -105,7 +105,7 @@ class HomeFragment : Fragment() {
                     rvItem.adapter = itemAdapter
                 }
                 itemAdapter.setOnItemClickCallback(object : HomeItemAdapter.OnItemClickCallback {
-                    override fun onItemClicked(data: Item) {
+                    override fun onItemClicked(data: ItemLama) {
                         showDialogItem(data)
                     }
                 })
@@ -113,7 +113,7 @@ class HomeFragment : Fragment() {
         })
     }
 
-    private fun showDialogItem(data: Item) {
+    private fun showDialogItem(data: ItemLama) {
         val dialog = BottomSheetDialog(requireContext())
         val view = layoutInflater.inflate(R.layout.dialog_item, null)
         val tvSales = view.findViewById<TextView>(R.id.tv_sales)
