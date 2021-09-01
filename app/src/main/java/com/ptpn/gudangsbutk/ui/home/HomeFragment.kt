@@ -1,17 +1,13 @@
 package com.ptpn.gudangsbutk.ui.home
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -20,7 +16,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,9 +25,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
-import com.itextpdf.text.Document
-import com.itextpdf.text.Paragraph
-import com.itextpdf.text.pdf.PdfWriter
 import com.ptpn.gudangsbutk.R
 import com.ptpn.gudangsbutk.data.Barang
 import com.ptpn.gudangsbutk.data.Data
@@ -41,24 +33,22 @@ import com.ptpn.gudangsbutk.ui.user.UserActivity
 import com.ptpn.gudangsbutk.utils.generateFile
 import com.ptpn.gudangsbutk.utils.goToFileIntent
 import com.ptpn.gudangsbutk.viewmodel.ViewModelFactory
-import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
-
-@Suppress("DEPRECATION")
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: HomeViewModel
     private lateinit var mAuth: FirebaseAuth
     private lateinit var barangAdapter: HomeBarangAdapter
     private lateinit var dataAdapter: DataAdapter
-    private lateinit var tanggal: String
     private lateinit var title: String
     private lateinit var dataResponse: List<Data>
-    companion object {
-        private const val PERMISSION_CODE = 1001
-    }
+    private lateinit var dateLong: String
+    private lateinit var dateShort: String
+    private lateinit var longDateFormat: SimpleDateFormat
+    private lateinit var shortDateFormat: SimpleDateFormat
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
@@ -77,8 +67,10 @@ class HomeFragment : Fragment() {
         val datetimeFormat = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale.getDefault())
         val currentDate = datetimeFormat.format(date)
 
-        val tanggalFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
-        tanggal = tanggalFormat.format(date)
+        shortDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        longDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+        dateLong = longDateFormat.format(date)
+        dateShort = shortDateFormat.format(date)
 
         val calender = Calendar.getInstance()
         val datePicker = OnDateSetListener{ _, year, month, day ->
@@ -95,10 +87,9 @@ class HomeFragment : Fragment() {
         )
         binding.shimmerRvBarang.startShimmer()
         populateBarang()
-        populateData(tanggal)
+        populateData(dateShort)
 
         binding.btnExportExcel.setOnClickListener { exportExcel() }
-        binding.btnExportPdf.setOnClickListener { exportPdf() }
         binding.btnUser.setOnClickListener {
             val userIntent = Intent(requireContext(), UserActivity::class.java)
             startActivity(userIntent)
@@ -132,6 +123,31 @@ class HomeFragment : Fragment() {
         })
     }
 
+    private fun populateBarang() {
+        viewModel.getBarang().observe(viewLifecycleOwner, { listBarang ->
+            if (listBarang !== null) {
+                barangAdapter = HomeBarangAdapter(listBarang, requireContext())
+                barangAdapter.notifyDataSetChanged()
+
+                binding.apply {
+                    rvBarang.layoutManager =
+                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    rvBarang.setHasFixedSize(true)
+                    rvBarang.adapter = barangAdapter
+                    shimmerRvBarang.stopShimmer()
+                    shimmerRvBarang.visibility = GONE
+                    rvBarang.visibility = VISIBLE
+                }
+                barangAdapter.setOnItemClickCallback(object :
+                    HomeBarangAdapter.OnItemClickCallback {
+                    override fun onItemClicked(data: Barang) {
+                        showDialogBarang(data)
+                    }
+                })
+            }
+        })
+    }
+
     @SuppressLint("InflateParams")
     private fun showDialogData(data: Data) {
         val dialog = BottomSheetDialog(requireContext())
@@ -149,8 +165,10 @@ class HomeFragment : Fragment() {
         rvItem.setHasFixedSize(true)
         rvItem.adapter = itemAdapter
 
+        val dataParse: Date =  shortDateFormat.parse("${data.tanggal}")
+        val dataTanggal = longDateFormat.format(dataParse)
         tvSales.text = data.sales
-        tvTanggal.text = data.tanggal
+        tvTanggal.text = dataTanggal
         tvKeterangan.text = data.keterangan
         tvAddedTime.text = data.addedTime
         tvId.text = StringBuilder("No Form : ${data.id?.substring(0, 13)}")
@@ -160,30 +178,7 @@ class HomeFragment : Fragment() {
         dialog.show()
     }
 
-    private fun populateBarang() {
-        viewModel.getBarang().observe(viewLifecycleOwner, { listBarang ->
-            if (listBarang !== null) {
-                barangAdapter = HomeBarangAdapter(listBarang, requireContext())
-                barangAdapter.notifyDataSetChanged()
-
-                binding.apply {
-                    rvBarang.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    rvBarang.setHasFixedSize(true)
-                    rvBarang.adapter = barangAdapter
-                    shimmerRvBarang.stopShimmer()
-                    shimmerRvBarang.visibility = GONE
-                    rvBarang.visibility = VISIBLE
-                }
-                barangAdapter.setOnItemClickCallback(object :
-                    HomeBarangAdapter.OnItemClickCallback {
-                    override fun onItemClicked(data: Barang) {
-                        showDialogBarang(data)
-                    }
-                })
-            }
-        })
-    }
-
+    @SuppressLint("InflateParams")
     private fun showDialogBarang(data: Barang) {
         val dialog = BottomSheetDialog(requireContext())
         val view = layoutInflater.inflate(R.layout.dialog_barang, null)
@@ -203,7 +198,7 @@ class HomeFragment : Fragment() {
         dialog.show()
     }
 
-    private fun getCSVFileName() : String = "Pengambilan Barang $tanggal.csv"
+    private fun getCSVFileName() : String = "Pengambilan Barang $dateLong.csv"
 
     private fun exportExcel() {
         val csvFile = generateFile(requireContext(), getCSVFileName())
@@ -242,78 +237,21 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
-            Toast.makeText(
-                requireContext(),
-                getString(R.string.csv_file_generated_text),
-                Toast.LENGTH_LONG
-            ).show()
+            Toast.makeText(requireContext(), getString(R.string.csv_file_generated_text), Toast.LENGTH_LONG).show()
             val intent = goToFileIntent(requireContext(), csvFile)
             startActivity(intent)
         } else {
-            Toast.makeText(
-                requireContext(),
-                getString(R.string.csv_file_not_generated_text),
-                Toast.LENGTH_LONG
-            ).show()
-        }
-    }
-
-    private fun exportPdf() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if (checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
-                val permissions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                requestPermissions(permissions, PERMISSION_CODE)
-                Log.d("pdf", "permission denied")
-            } else { savePdf()
-                Log.d("pdf", "start save pdf")
-            }
-        } else { savePdf()
-            Log.d("pdf", "start save pdf build version < m")
-        }
-    }
-
-    private fun savePdf() {
-        val mDoc = Document()
-        val mFileName = "Pengambilan Barang $tanggal"
-        val mFilePath = Environment.getExternalStorageDirectory().toString() + "/" + mFileName +".pdf"
-
-        try {
-            PdfWriter.getInstance(mDoc, FileOutputStream(mFilePath))
-            mDoc.open()
-            mDoc.addAuthor(mAuth.currentUser?.displayName)
-            mDoc.add(Paragraph("Pengambilan Barang "))
-            mDoc.close()
-            Log.d("pdf", "success ${mFileName} path $mFilePath")
-            Toast.makeText(
-                requireContext(),
-                "$mFileName.pdf\n berhasil disimpan ke dalam folder \n$mFilePath",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-        catch (e: Exception){
-            Log.d("pdf", "exception ${e.message}")
-            Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        when (requestCode) {
-            PERMISSION_CODE -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                savePdf()
-            }
+            Toast.makeText(requireContext(), getString(R.string.csv_file_not_generated_text), Toast.LENGTH_LONG).show()
         }
     }
 
     private fun updateTanggal(calender: Date) {
-        val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
-        tanggal = dateFormat.format(calender)
-        Toast.makeText(requireContext(), "Memuat data tanggal = $tanggal", Toast.LENGTH_SHORT).show()
-        populateData(tanggal)
-        title = "Pengambilan barang $tanggal"
+        dateLong = longDateFormat.format(calender)
+        dateShort = shortDateFormat.format(calender)
+
+        Toast.makeText(requireContext(), "Memuat data tanggal = $dateLong", Toast.LENGTH_SHORT).show()
+        populateData(dateShort)
+        title = "Pengambilan barang $dateLong"
         binding.tvTitle.text = title
     }
 }

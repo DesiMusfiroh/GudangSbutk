@@ -31,7 +31,10 @@ class FormFragment : Fragment(), View.OnClickListener {
     private lateinit var mAuth: FirebaseAuth
     private var barangAdapter: ArrayAdapter<String>? = null
     private var satuanAdapter: ArrayAdapter<String>? = null
-    private lateinit var tanggal: String
+    private lateinit var dateLong: String
+    private lateinit var dateShort: String
+    private lateinit var longDateFormat: SimpleDateFormat
+    private lateinit var shortDateFormat: SimpleDateFormat
     private lateinit var listItem: ArrayList<Item>
     private lateinit var itemAdapter: FormAdapter
 
@@ -48,9 +51,11 @@ class FormFragment : Fragment(), View.OnClickListener {
         mAuth = FirebaseAuth.getInstance()
 
         val date = Calendar.getInstance().time
-        val datetimeFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
-        tanggal = datetimeFormat.format(date)
-        binding.tvTanggal.text = tanggal
+        shortDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        longDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+        dateLong = longDateFormat.format(date)
+        dateShort = shortDateFormat.format(date)
+        binding.tvTanggal.text = dateLong
 
         listItem = ArrayList(0)
 
@@ -172,7 +177,6 @@ class FormFragment : Fragment(), View.OnClickListener {
         binding.apply {
             val sales: String = etSales.text.toString()
             val keterangan: String = etKeterangan.text.toString()
-            val tanggal: String = tvTanggal.text.toString()
 
             if (sales.isEmpty()) {
                 etSales.error = "Mohon diisi terlebih dahulu!"
@@ -185,7 +189,7 @@ class FormFragment : Fragment(), View.OnClickListener {
                 return
             }
 
-            val data = Data(id, user, tanggal, sales, keterangan, addedTime, listItem)
+            val data = Data(id, user, dateShort, sales, keterangan, addedTime, listItem)
             viewModel.insertData(data).apply {
                 showAlert(this)
             }
@@ -219,9 +223,9 @@ class FormFragment : Fragment(), View.OnClickListener {
     }
 
     private fun updateTanggal(calender: Date) {
-        val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
-        tanggal = dateFormat.format(calender)
-        binding.tvTanggal.text = tanggal
-        Toast.makeText(requireContext(), "Tanggal form diubah = $tanggal", Toast.LENGTH_SHORT).show()
+        dateLong = longDateFormat.format(calender)
+        dateShort = shortDateFormat.format(calender)
+        binding.tvTanggal.text = dateLong
+        Toast.makeText(requireContext(), "Tanggal form diubah = $dateLong", Toast.LENGTH_SHORT).show()
     }
 }

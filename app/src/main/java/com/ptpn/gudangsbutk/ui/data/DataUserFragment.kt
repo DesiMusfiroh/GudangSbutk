@@ -23,7 +23,10 @@ import com.ptpn.gudangsbutk.ui.home.DataAdapter
 import com.ptpn.gudangsbutk.ui.home.ItemAdapter
 import com.ptpn.gudangsbutk.viewmodel.ViewModelFactory
 import java.lang.StringBuilder
+import java.text.SimpleDateFormat
+import java.util.*
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class DataUserFragment : Fragment() {
     private lateinit var binding: FragmentDataUserBinding
     private lateinit var viewModel: DataViewModel
@@ -83,8 +86,13 @@ class DataUserFragment : Fragment() {
         rvItem.setHasFixedSize(true)
         rvItem.adapter = itemAdapter
 
+        val shortDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val longDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+        val dataParse: Date =  shortDateFormat.parse("${data.tanggal}")
+        val dataTanggal = longDateFormat.format(dataParse)
+
         tvSales.text = data.sales
-        tvTanggal.text = data.tanggal
+        tvTanggal.text = dataTanggal
         tvKeterangan.text = data.keterangan
         tvAddedTime.text = data.addedTime
         tvId.text = StringBuilder("No Form : ${data.id?.substring(0, 13)}")
