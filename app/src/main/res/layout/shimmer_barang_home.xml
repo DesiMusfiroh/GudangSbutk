@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@color/primary"
+            android:background="@color/shimmer"
             android:contentDescription="@string/jenis_barang"/>
 
     </androidx.cardview.widget.CardView>
@@ -36,6 +36,8 @@
         android:layout_marginBottom="4dp"
         android:maxLines="2"
         android:gravity="center"
+        android:background="@color/shimmer"
+        android:textColor="@color/shimmer"
         tools:text="@string/kode_barang" />
 
 </LinearLayout>

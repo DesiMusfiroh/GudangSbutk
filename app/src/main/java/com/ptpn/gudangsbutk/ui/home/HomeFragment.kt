@@ -2,6 +2,7 @@ package com.ptpn.gudangsbutk.ui.home
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -11,6 +12,8 @@ import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -32,6 +35,7 @@ import com.ptpn.gudangsbutk.R
 import com.ptpn.gudangsbutk.data.Barang
 import com.ptpn.gudangsbutk.data.Data
 import com.ptpn.gudangsbutk.databinding.FragmentHomeBinding
+import com.ptpn.gudangsbutk.ui.user.UserActivity
 import com.ptpn.gudangsbutk.utils.generateFile
 import com.ptpn.gudangsbutk.utils.goToFileIntent
 import com.ptpn.gudangsbutk.viewmodel.ViewModelFactory
@@ -78,11 +82,15 @@ class HomeFragment : Fragment() {
         Glide.with(requireContext()).load(currentUser?.photoUrl).apply(RequestOptions.circleCropTransform()).into(
             binding.btnUser
         )
-
+        binding.shimmerRvBarang.startShimmer()
         populateBarang()
         populateData()
         binding.btnExportExcel.setOnClickListener { exportExcel() }
         binding.btnExportPdf.setOnClickListener { exportPdf() }
+        binding.btnUser.setOnClickListener {
+            val userIntent = Intent(requireContext(), UserActivity::class.java)
+            startActivity(userIntent)
+        }
     }
 
     private fun populateData() {
@@ -144,6 +152,9 @@ class HomeFragment : Fragment() {
                     rvBarang.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     rvBarang.setHasFixedSize(true)
                     rvBarang.adapter = barangAdapter
+                    shimmerRvBarang.stopShimmer()
+                    shimmerRvBarang.visibility = GONE
+                    rvBarang.visibility = VISIBLE
                 }
                 barangAdapter.setOnItemClickCallback(object :
                     HomeBarangAdapter.OnItemClickCallback {

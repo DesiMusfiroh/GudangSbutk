@@ -90,12 +90,12 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp" >
+                android:layout_height="230dp" >
 
                 <FrameLayout
                     android:id="@+id/frameLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="110dp"
                     android:background="@color/primary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -103,7 +103,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="8dp"
@@ -122,16 +122,35 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/app_name"
-                            android:layout_gravity="end"
+                            android:layout_gravity="start"
                             android:layout_marginTop="10dp"
-                            android:layout_marginHorizontal="20dp"/>
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginBottom="4dp"/>
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_barang"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="12dp"
+                            android:visibility="gone"
                             tools:listitem="@layout/item_barang_home"/>
+
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/shimmer_rv_barang"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="12dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <include layout="@layout/shimmer_barang_home" />
+                                <include layout="@layout/shimmer_barang_home" />
+                                <include layout="@layout/shimmer_barang_home" />
+                            </LinearLayout>
+                        </com.facebook.shimmer.ShimmerFrameLayout>
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>

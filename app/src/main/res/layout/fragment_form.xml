@@ -9,18 +9,23 @@
     <FrameLayout
         android:id="@+id/frameLayout2"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:background="@color/primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            style="@style/Text.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginHorizontal="20dp"
             android:text="@string/form_pengambilan_barang"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"/>
     </FrameLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -71,6 +76,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_sales"
                 style="@style/Text.Medium"
+                android:textColor="@color/black"
                 android:textStyle="normal"
                 android:background="@drawable/bg_input"
                 android:padding="10dp"
@@ -89,6 +95,7 @@
                 android:id="@+id/et_keterangan"
                 style="@style/Text.Medium"
                 android:textStyle="normal"
+                android:textColor="@color/black"
                 android:background="@drawable/bg_input"
                 android:padding="10dp"
                 android:layout_marginTop="8dp"
@@ -103,12 +110,19 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginHorizontal="20dp"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_item"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                tools:listitem="@layout/item_form"/>
+                android:layout_marginHorizontal="20dp"
+                app:cardElevation="10dp"
+                app:cardCornerRadius="10dp"
+                android:layout_marginTop="16dp">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/item_form"/>
+            </androidx.cardview.widget.CardView>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

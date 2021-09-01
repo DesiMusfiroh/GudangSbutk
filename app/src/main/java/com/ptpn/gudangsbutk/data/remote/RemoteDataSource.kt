@@ -163,13 +163,23 @@ class RemoteDataSource {
 
     fun getUserData(user: String) : LiveData<ArrayList<Data>> {
         val results = MutableLiveData<ArrayList<Data>>()
-        db.collection("data").whereEqualTo("user", user).addSnapshotListener{ value, error ->
-            val listItem = ArrayList<Data>()
-            for (dc: DocumentChange in value?.documentChanges!!) {
-                listItem.add(dc.document.toObject(Data::class.java))
-            }
-            results.postValue(listItem)
-        }
+        db.collection("data").whereEqualTo("user", user).get()
+                .addOnSuccessListener { documents ->
+                    val listItem = ArrayList<Data>()
+                    for (document in documents) {
+                        listItem.add(document.toObject(Data::class.java))
+                    }
+                    results.postValue(listItem)
+                }.addOnFailureListener { exception ->
+                    Log.w(TAG, "Error getting documents: ", exception)
+                }
         return results
+    }
+
+    fun deleteData(dataId: String) : Boolean {
+        db.collection("data").document(dataId).delete()
+                .addOnSuccessListener {  }
+                .addOnFailureListener {  }
+        return true
     }
 }

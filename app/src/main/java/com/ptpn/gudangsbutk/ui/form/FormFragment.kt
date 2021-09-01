@@ -45,8 +45,6 @@ class FormFragment : Fragment(), View.OnClickListener {
         viewModel = ViewModelProvider(this, factory)[FormViewModel::class.java]
 
         mAuth = FirebaseAuth.getInstance()
-        val sales = mAuth.currentUser?.displayName
-        binding.etSales.setText(sales)
 
         val date = Calendar.getInstance().time
         val datetimeFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())

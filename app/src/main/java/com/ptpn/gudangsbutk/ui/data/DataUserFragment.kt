@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -66,13 +68,14 @@ class DataUserFragment : Fragment() {
     @SuppressLint("InflateParams")
     private fun showDialogData(data: Data) {
         val dialog = BottomSheetDialog(requireContext())
-        val view = layoutInflater.inflate(R.layout.dialog_data, null)
+        val view = layoutInflater.inflate(R.layout.dialog_data_saya, null)
         val tvSales = view.findViewById<TextView>(R.id.tv_sales)
         val tvTanggal = view.findViewById<TextView>(R.id.tv_tanggal)
         val tvKeterangan = view.findViewById<TextView>(R.id.tv_keterangan)
         val tvAddedTime = view.findViewById<TextView>(R.id.tv_added_time)
         val tvId = view.findViewById<TextView>(R.id.tv_id)
         val rvItem = view.findViewById<RecyclerView>(R.id.rv_item)
+        val btnDelete = view.findViewById<ImageView>(R.id.btn_delete)
 
         val itemAdapter = data.item?.let { ItemAdapter(it, requireContext()) }
         itemAdapter?.notifyDataSetChanged()
@@ -86,6 +89,18 @@ class DataUserFragment : Fragment() {
         tvAddedTime.text = data.addedTime
         tvId.text = StringBuilder("No Form : ${data.id?.substring(0, 13)}")
 
+        btnDelete.setOnClickListener {
+            AlertDialog.Builder(requireContext()).apply {
+                setMessage(getString(R.string.delete_alert, data.id?.substring(0, 13)))
+                setNegativeButton(getString(R.string.no), null)
+                setPositiveButton(getString(R.string.yes)) { _, _ ->
+                    viewModel.deleteData(data.id!!)
+                    dialog.dismiss()
+                    populateData()
+                }
+                show()
+            }
+        }
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setContentView(view)
         dialog.show()

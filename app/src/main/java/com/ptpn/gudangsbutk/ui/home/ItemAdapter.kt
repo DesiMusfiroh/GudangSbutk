@@ -2,6 +2,7 @@ package com.ptpn.gudangsbutk.ui.home
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ptpn.gudangsbutk.data.Item
@@ -29,6 +30,10 @@ class ItemAdapter(private val listItem: ArrayList<Item>, val context: Context) :
                 tvNo.text = StringBuilder("$no.")
                 tvBarang.text = item.barang
                 tvJumlah.text = StringBuilder("${item.jumlah} ${item.satuan}")
+                if (item.catatan != "") {
+                    tvCatatan.visibility = VISIBLE
+                    tvCatatan.text = item.catatan
+                }
             }
         }
     }

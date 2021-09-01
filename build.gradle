@@ -4,7 +4,7 @@ buildscript {
     ext {
         roomVersion = '2.3.0'
         glideVersion = '4.11.0'
-        lottie_version = "3.4.1"
+        lottie_version = "3.6.1"
     }
     repositories {
         google()

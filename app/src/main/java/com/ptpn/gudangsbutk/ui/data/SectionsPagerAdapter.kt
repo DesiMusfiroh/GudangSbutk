@@ -13,13 +13,13 @@ class SectionsPagerAdapter(private val mContext: DataFragment, fm: FragmentManag
 
     companion object {
         @StringRes
-        private val TAB_TITLES = intArrayOf(R.string.data_saya, R.string.data_all)
+        private val TAB_TITLES = intArrayOf(R.string.data_all, R.string.data_saya)
     }
 
     override fun getItem(position: Int): Fragment =
         when (position) {
-            0 -> DataUserFragment()
-            1 -> DataAllFragment()
+            0 -> DataAllFragment()
+            1 -> DataUserFragment()
             else -> Fragment()
         }
 

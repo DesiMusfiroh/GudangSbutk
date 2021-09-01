@@ -109,6 +109,15 @@
         tools:listitem="@layout/item_dialog_data"
         android:layout_marginTop="8dp"/>
 
+    <ImageView
+        android:id="@+id/btn_delete"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_delete"
+        android:layout_gravity="end"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/delete" />
 </LinearLayout>
 
 

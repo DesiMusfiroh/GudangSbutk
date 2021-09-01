@@ -13,9 +13,9 @@
         android:background="@color/primary">
 
         <TextView
-            style="@style/Text.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:text="@string/data_pengambilan_barang"
             android:textColor="@color/white"

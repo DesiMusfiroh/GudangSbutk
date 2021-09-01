@@ -83,6 +83,7 @@ class SettingsFragment : Fragment() {
             val result = data?.getBooleanExtra(EXTRA_RESULT_ADD, false)
             if (result == true) {
                 Toast.makeText(context, "Berhasil menambah jenis barang!", Toast.LENGTH_SHORT).show()
+                populateBarang()
             } else {
                 Toast.makeText(context, "Gagal menambah jenis barang!", Toast.LENGTH_SHORT).show()
             }
@@ -92,6 +93,7 @@ class SettingsFragment : Fragment() {
             val result = data?.getBooleanExtra(EXTRA_RESULT_EDIT, false)
             if (result == true) {
                 Toast.makeText(context, "Berhasil mengedit jenis barang!", Toast.LENGTH_SHORT).show()
+                populateBarang()
             } else {
                 Toast.makeText(context, "Gagal mengedit jenis barang!", Toast.LENGTH_SHORT).show()
             }

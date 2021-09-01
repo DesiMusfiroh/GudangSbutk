@@ -57,7 +57,8 @@ class EditBarangActivity : AppCompatActivity(){
         binding.apply {
             etKode.setText(barang.kode)
             etNama.setText(barang.nama)
-            etKeterangan.setText(barang.keterangan)
+            etKode.isFocusable = false
+            etKode.isEnabled = false
 
             if (barang.image != null) {
                 ivImage.visibility = View.VISIBLE

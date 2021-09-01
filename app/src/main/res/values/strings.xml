@@ -55,4 +55,11 @@
     <string name="jumlah_item">Jumlah Item</string>
     <string name="no_form">No Form : -----</string>
     <string name="nomor">No</string>
+    <string name="nama_user">Nama User</string>
+    <string name="email_user">gmail.com</string>
+    <string name="logout">Log Out</string>
+    <string name="information">Information</string>
+    <string name="help">Help Center</string>
+    <string name="pengaturan">Pengaturan</string>
+    <string name="delete_alert">Hapus data pengambilan barang no %s ?</string>
 </resources>
