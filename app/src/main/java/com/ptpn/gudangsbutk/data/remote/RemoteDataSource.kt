@@ -10,6 +10,8 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.ptpn.gudangsbutk.data.Barang
 import com.ptpn.gudangsbutk.data.Data
+import com.ptpn.gudangsbutk.data.Rekap
+import java.lang.Exception
 
 class RemoteDataSource {
     private val db = Firebase.firestore
@@ -86,9 +88,8 @@ class RemoteDataSource {
         db.collection("barang").addSnapshotListener { value, error ->
             val listBarang = ArrayList<Barang>()
             for (dc: DocumentChange in value?.documentChanges!!) {
-                if (dc.type == DocumentChange.Type.ADDED) {
-                    listBarang.add(dc.document.toObject(Barang::class.java))
-                }
+                 listBarang.add(dc.document.toObject(Barang::class.java))
+
             }
             results.postValue(listBarang)
         }
@@ -151,13 +152,16 @@ class RemoteDataSource {
 
     fun getAllData() : LiveData<ArrayList<Data>> {
         val results = MutableLiveData<ArrayList<Data>>()
-        db.collection("data").addSnapshotListener{ value, error ->
-            val listItem = ArrayList<Data>()
-            for (dc: DocumentChange in value?.documentChanges!!) {
-                listItem.add(dc.document.toObject(Data::class.java))
-            }
-            results.postValue(listItem)
-        }
+        db.collection("data").get()
+                .addOnSuccessListener { documents ->
+                    val listItem = ArrayList<Data>()
+                    for (document in documents) {
+                        listItem.add(document.toObject(Data::class.java))
+                    }
+                    results.postValue(listItem)
+                }.addOnFailureListener { exception ->
+                    Log.w(TAG, "Error getting documents: ", exception)
+                }
         return results
     }
 
@@ -181,5 +185,66 @@ class RemoteDataSource {
                 .addOnSuccessListener {  }
                 .addOnFailureListener {  }
         return true
+    }
+
+    fun getMonthlyData(bulan: String) : LiveData<ArrayList<Data>> {
+        val results = MutableLiveData<ArrayList<Data>>()
+        db.collection("data").whereArrayContains("tanggal", bulan).addSnapshotListener{ value, error ->
+            val listItem = ArrayList<Data>()
+            for (dc: DocumentChange in value?.documentChanges!!) {
+                listItem.add(dc.document.toObject(Data::class.java))
+            }
+            results.postValue(listItem)
+        }
+        return results
+    }
+
+    fun getRekap(tanggal: String) : LiveData<ArrayList<Rekap>> {
+        val result =  MutableLiveData<ArrayList<Rekap>>()
+        db.collection("barang").get().addOnSuccessListener { snapshotBarang ->
+            val listBarang = ArrayList<Barang>()
+            val listRekap = ArrayList<Rekap>()
+            for (barang in snapshotBarang) {
+                listBarang.add(barang.toObject(Barang::class.java))
+            }
+            for (barang in listBarang) {
+                var jumlahPcs = 0
+                var jumlahDus = 0
+                var jumlahPaket = 0
+
+                try {
+                    db.collection("data").whereEqualTo("tanggal", tanggal).get()
+                        .addOnSuccessListener { snapshotData ->
+                            val listDataBarang = ArrayList<Data>()
+                            for (data in snapshotData) {
+                                val dataX = data.toObject(Data::class.java)
+                                dataX.item?.forEach {
+                                    if (it.barang?.contains(barang.kode!!) == true) {
+                                        if (it.satuan.equals("Pcs")) {
+                                            jumlahPcs += it.jumlah?.toInt()!!
+                                        }
+                                        if (it.satuan.equals("Dus")) {
+                                            jumlahDus += it.jumlah?.toInt()!!
+                                        }
+                                        if (it.satuan.equals("Paket")) {
+                                            jumlahPaket += it.jumlah?.toInt()!!
+                                        }
+                                    }
+                                    Log.d(TAG, "Jumlah Pcs inside foreach item $jumlahPcs")
+                                }
+                                Log.d(TAG, "Jumlah Pcs inside for data $jumlahPcs")
+                                listDataBarang.add(data.toObject(Data::class.java))
+                            }
+                            Log.d(TAG, "Jumlah Pcs outside for data $jumlahPcs")
+                        }
+                } catch (e: Exception) {
+                    Log.d(TAG, e.toString())
+                }
+                val newRekap = Rekap(tanggal, barang.kode, jumlahPcs, jumlahDus, jumlahPaket)
+                listRekap.add(newRekap)
+            }
+           result.postValue(listRekap)
+        }
+        return result
     }
 }

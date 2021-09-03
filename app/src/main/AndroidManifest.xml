@@ -18,8 +18,8 @@
         android:theme="@style/Theme.GudangSbutk"
         tools:ignore="AllowBackup">
         <activity android:name=".ui.user.UserActivity" android:parentActivityName=".ui.dashboard.DashboardActivity"/>
-        <activity android:name=".ui.barang.AddBarangActivity" />
-        <activity android:name=".ui.barang.EditBarangActivity" />
+        <activity android:name=".ui.barang.AddBarangActivity" android:parentActivityName=".ui.dashboard.DashboardActivity" />
+        <activity android:name=".ui.barang.EditBarangActivity" android:parentActivityName=".ui.dashboard.DashboardActivity"/>
         <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

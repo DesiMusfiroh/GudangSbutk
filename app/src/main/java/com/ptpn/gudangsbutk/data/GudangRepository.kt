@@ -32,4 +32,6 @@ class GudangRepository private constructor(
     fun getAllData(): LiveData<ArrayList<Data>> = remoteDataSource.getAllData()
     fun getUserData(user: String): LiveData<ArrayList<Data>> = remoteDataSource.getUserData(user)
     fun deleteData(dataId: String): Boolean = remoteDataSource.deleteData(dataId)
+
+    fun getRekap(tanggal: String): LiveData<ArrayList<Rekap>> = remoteDataSource.getRekap(tanggal)
 }

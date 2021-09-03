@@ -9,15 +9,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.doyaaaaaken.kotlincsv.dsl.csvWriter
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.ptpn.gudangsbutk.R
 import com.ptpn.gudangsbutk.data.Data
 import com.ptpn.gudangsbutk.databinding.FragmentDataAllBinding
 import com.ptpn.gudangsbutk.ui.home.DataAdapter
 import com.ptpn.gudangsbutk.ui.home.ItemAdapter
+import com.ptpn.gudangsbutk.utils.generateFile
+import com.ptpn.gudangsbutk.utils.goToFileIntent
 import com.ptpn.gudangsbutk.viewmodel.ViewModelFactory
 import java.lang.StringBuilder
 import java.text.SimpleDateFormat
@@ -41,6 +45,7 @@ class DataAllFragment : Fragment() {
         viewModel = ViewModelProvider(this, factory)[DataViewModel::class.java]
 
         populateData()
+        binding.btnExportExcel.setOnClickListener { exportExcel() }
     }
 
     private fun populateData() {
@@ -97,4 +102,50 @@ class DataAllFragment : Fragment() {
         dialog.show()
     }
 
+    private fun getCSVFileName() : String = "Pengambilan Barang All.csv"
+
+    private fun exportExcel() {
+        val csvFile = generateFile(requireContext(), getCSVFileName())
+        if (csvFile != null) {
+            csvWriter().open(csvFile, append = false) {
+                writeRow(
+                        listOf(
+                                "No",
+                                "Kode",
+                                "Tanggal",
+                                "Sales",
+                                "Keterangan",
+                                "Barang",
+                                "Jumlah",
+                                "Satuan",
+                                "Catatan",
+                                "Added Time"
+                        )
+                )
+                dataResponse.forEachIndexed { index, data ->
+                    data.item?.forEach{ item ->
+                        writeRow(
+                                listOf(
+                                        index + 1,
+                                        data.id?.substring(0, 13),
+                                        data.tanggal,
+                                        data.sales,
+                                        data.keterangan,
+                                        item.barang,
+                                        item.jumlah,
+                                        item.satuan,
+                                        item.catatan,
+                                        data.addedTime,
+                                )
+                        )
+                    }
+                }
+            }
+            Toast.makeText(requireContext(), getString(R.string.csv_file_generated_text), Toast.LENGTH_LONG).show()
+            val intent = goToFileIntent(requireContext(), csvFile)
+            startActivity(intent)
+        } else {
+            Toast.makeText(requireContext(), getString(R.string.csv_file_not_generated_text), Toast.LENGTH_LONG).show()
+        }
+    }
 }

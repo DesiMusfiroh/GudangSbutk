@@ -6,7 +6,33 @@
     android:orientation="vertical"
     android:background="@drawable/bg_dialog_bottom">
 
+    <TextView
+        style="@style/Text.Medium"
+        android:text="@string/sbu"
+        android:layout_marginBottom="8dp"/>
 
+    <TextView
+        style="@style/Text.Medium"
+        android:text="@string/ptpn"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        style="@style/Text.Regular"
+        android:text="@string/app_version"
+        android:layout_marginBottom="2dp"
+        android:gravity="end"/>
+
+    <TextView
+        style="@style/Text.Regular"
+        android:text="@string/copyright"
+        android:layout_marginBottom="4dp"
+        android:gravity="end"/>
+
+    <TextView
+        style="@style/Text.Small"
+        android:text="@string/created_by"
+        android:layout_marginBottom="8dp"
+        android:gravity="end"/>
 </LinearLayout>
 
 

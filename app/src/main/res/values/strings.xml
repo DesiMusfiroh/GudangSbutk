@@ -62,4 +62,9 @@
     <string name="help">Help Center</string>
     <string name="pengaturan">Pengaturan</string>
     <string name="delete_alert">Hapus data pengambilan barang no %s ?</string>
+    <string name="sbu">Sub Bagian Unit Teh Kemasan</string>
+    <string name="ptpn">PT Perkebunan Nusantara VI</string>
+    <string name="app_version">App version :  1.0.0</string>
+    <string name="copyright">Copyright &#xA9; 2021</string>
+    <string name="created_by">Developed by : musfiroh.desi@gmail.com</string>
 </resources>
