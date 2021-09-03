@@ -23,28 +23,40 @@
             android:layout_marginBottom="20dp"/>
     </FrameLayout>
 
-    <TextView
-        style="@style/Text.Medium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/jenis_barang" 
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginHorizontal="20dp"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_barang"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:listitem="@layout/item_barang" />
 
-    <Button
-        style="@style/Button"
-        android:id="@+id/btn_add_barang"
-        android:layout_width="wrap_content"
-        android:layout_gravity="end"
-        android:text="@string/add_barang"
-        android:layout_margin="20dp"
-        android:padding="8dp"/>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/Text.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/jenis_barang"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginHorizontal="20dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_barang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_barang" />
+
+            <Button
+                style="@style/Button"
+                android:id="@+id/btn_add_barang"
+                android:layout_width="wrap_content"
+                android:layout_gravity="end"
+                android:text="@string/add_barang"
+                android:layout_margin="20dp"
+                android:padding="8dp"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>
